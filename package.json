@@ -1,0 +1,46 @@
+{
+  "name": "m-social-2",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "prepare": "husky",
+    "lint:ts": "eslint \"./src/**/*.{ts,tsx}\" ",
+    "lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix"
+  },
+  "dependencies": {
+    "expo": "~50.0.6",
+    "expo-splash-screen": "^0.26.4",
+    "expo-status-bar": "~1.11.1",
+    "nativewind": "^2.0.11",
+    "react": "18.2.0",
+    "react-native": "0.73.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/react": "~18.2.45",
+    "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "@typescript-eslint/parser": "^7.0.1",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-native": "^4.1.0",
+    "eslint-plugin-simple-import-sort": "^12.0.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "3.2.5",
+    "tailwindcss": "^3.3.2",
+    "typescript": "^5.1.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint",
+      "prettier --write"
+    ]
+  },
+  "private": true
+}
