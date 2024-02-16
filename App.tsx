@@ -1,15 +1,14 @@
+import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { useColorScheme } from "nativewind";
 import { useCallback } from "react";
 
-import { Pressable, Text } from "@/app/styled";
+import { AuthForm } from "@/components/AuthForm/ui/AuthForm/AuthForm";
+import { Container } from "@/shared/ui";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const { colorScheme, toggleColorScheme } = useColorScheme();
-
   const [fontsLoaded, fontError] = useFonts({
     OpenSans: require("./src/shared/assets/fonts/OpenSans-VariableFont_wdth,wght.ttf"),
   });
@@ -25,14 +24,10 @@ export default function App() {
   }
 
   return (
-    <Pressable
-      onPress={toggleColorScheme}
-      className="flex-1 items-center justify-center dark:bg-slate-800"
-      onLayout={onLayoutRootView}
-    >
-      <Text selectable={false} className="dark:bg-purple-400">
-        {`Try clicking me! ${colorScheme === "dark" ? "🌙" : "🌞"}`}
-      </Text>
-    </Pressable>
+    <NavigationContainer>
+      <Container onLayout={onLayoutRootView}>
+        <AuthForm />
+      </Container>
+    </NavigationContainer>
   );
 }
