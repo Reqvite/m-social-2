@@ -1,7 +1,11 @@
-import { LoginScreenAsync } from "./Auth/LoginScreen/LoginScreen.async";
+import LoginScreen from "./Auth/LoginScreen/LoginScreen";
 import { RegisterScreenAsync } from "./Auth/RegisterScreen/RegisterScreen.async";
-import { HomeScreenAsync } from "./Main/HomeScreen/HomeScreen.async";
+import { CreatePostsScreenAsync } from "./Main/CreatePostsScreen/CreatePostsScreen.async";
+import HomeScreen from "./Main/HomeScreen/HomeScreen";
+import { ProfileScreenAsync } from "./Main/ProfileScreen/ProfileScreen.async";
 
-export { HomeScreenAsync as HomeScreen };
-export { LoginScreenAsync as LoginScreen };
+export { HomeScreen };
+export { LoginScreen };
+export { ProfileScreenAsync as ProfileScreen };
+export { CreatePostsScreenAsync as CreatePostsScreen };
 export { RegisterScreenAsync as RegisterScreen };

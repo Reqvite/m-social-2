@@ -1,33 +1,42 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { useCallback } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 import { useRoute } from "@/app/Routes/AppRoute";
-import { Container } from "@/shared/ui";
+import { Text } from "@/shared/ui";
 
-// SplashScreen.preventAutoHideAsync();
-
+SplashScreen.preventAutoHideAsync;
 export default function App() {
-  const [fontsLoaded, fontError] = useFonts({
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  const [fontsLoaded] = useFonts({
     OpenSans: require("./src/shared/assets/fonts/OpenSans-VariableFont_wdth,wght.ttf"),
   });
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded || fontError) {
-      await SplashScreen.hideAsync();
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await SplashScreen.hideAsync();
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
     }
-  }, [fontsLoaded, fontError]);
 
-  if (!fontsLoaded && !fontError) {
+    prepare();
+  }, []);
+
+  if (!appIsReady || !fontsLoaded) {
     return null;
   }
 
   const routing = useRoute(true);
 
   return (
-    <NavigationContainer>
-      <Container onLayout={onLayoutRootView}>{routing}</Container>
-    </NavigationContainer>
+    <Suspense fallback={<Text text="LOADING" />}>
+      <NavigationContainer>{routing}</NavigationContainer>
+    </Suspense>
   );
 }

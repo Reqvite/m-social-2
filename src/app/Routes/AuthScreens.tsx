@@ -3,7 +3,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { LoginScreen, RegisterScreen } from "@/screens";
 
 const { Navigator, Screen } = createStackNavigator();
-
 export const AuthScreens = () => {
   return (
     <Navigator initialRouteName="Login">

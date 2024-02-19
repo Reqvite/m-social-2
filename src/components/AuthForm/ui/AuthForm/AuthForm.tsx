@@ -23,8 +23,12 @@ export const AuthForm = ({ isRegistration }: Props) => {
   const navigation = useNavigation();
   const navigate = () =>
     navigation.navigate(isRegistration ? "Login" : "Registration");
+
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback
+      onPress={Keyboard.dismiss}
+      style={styles.container}
+    >
       <View style={styles.container}>
         <KeyboardAvoidingView
           style={styles.container}

@@ -2,7 +2,7 @@ import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
-import { LoginScreen } from "@/screens";
+import { CreatePostsScreen, HomeScreen, ProfileScreen } from "@/screens";
 
 import { variables } from "../styles/variables";
 
@@ -18,7 +18,7 @@ export const Tabs = () => {
     <Navigator initialRouteName="Home">
       <Screen
         name="Post"
-        component={LoginScreen}
+        component={HomeScreen}
         options={({ route }) => ({
           tabBarStyle: ((route) => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? "";
@@ -35,7 +35,7 @@ export const Tabs = () => {
       />
       <Screen
         name="CreatePost"
-        component={LoginScreen}
+        component={CreatePostsScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="post-add" size={size} color={color} />
@@ -45,7 +45,7 @@ export const Tabs = () => {
       />
       <Screen
         name="Profile"
-        component={LoginScreen}
+        component={ProfileScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="user" size={size} color={color} />
