@@ -1,13 +1,9 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import { AuthScreens } from "./AuthScreens";
+import { Tabs } from "./Tabs";
 
-import RegisterScreen from "@/screens/RegisterScreen/RegisterScreen";
-
-const { Navigator, Screen } = createStackNavigator();
-
-export const AppRoute = () => {
-  return (
-    <Navigator>
-      <Screen name="Registration" component={RegisterScreen} />
-    </Navigator>
-  );
+export const useRoute = (isAuth: boolean) => {
+  if (!isAuth) {
+    return <AuthScreens />;
+  }
+  return <Tabs />;
 };

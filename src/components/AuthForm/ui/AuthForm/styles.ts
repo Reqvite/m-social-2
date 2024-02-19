@@ -11,10 +11,15 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   box: {
+    paddingTop: 32,
+    paddingBottom: 42,
     padding: 16,
     backgroundColor: variables.bgPrimary,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
+  },
+  boxTopBiggerPadding: {
+    paddingTop: 92,
   },
   form: {
     gap: 10,
@@ -25,5 +30,15 @@ export const styles = StyleSheet.create({
   },
   button: {
     marginTop: 43,
+  },
+  photoLoader: {
+    position: "absolute",
+    top: -40,
+    left: "50%",
+    transform: [{ translateX: -50 }],
+  },
+  link: {
+    marginTop: 16,
+    color: variables.linkColor,
   },
 });

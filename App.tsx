@@ -3,10 +3,10 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 
-import { AuthForm } from "@/components/AuthForm/ui/AuthForm/AuthForm";
+import { useRoute } from "@/app/Routes/AppRoute";
 import { Container } from "@/shared/ui";
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -23,11 +23,11 @@ export default function App() {
     return null;
   }
 
+  const routing = useRoute(true);
+
   return (
     <NavigationContainer>
-      <Container onLayout={onLayoutRootView}>
-        <AuthForm />
-      </Container>
+      <Container onLayout={onLayoutRootView}>{routing}</Container>
     </NavigationContainer>
   );
 }

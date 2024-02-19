@@ -1,24 +1,28 @@
-import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   ImageBackground,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
 
-import { Button, Input, Text } from "@/shared/ui";
+import { Button, Input, PhotoLoader, Text } from "@/shared/ui";
 
+import { useAuthForm } from "../../model/useAuthForm";
 import { styles } from "./styles";
 
 type Props = {
-  isRegistration: boolean;
+  isRegistration?: boolean;
 };
 
 export const AuthForm = ({ isRegistration }: Props) => {
-  const [text, setText] = useState("");
-
+  const { dispatch, state } = useAuthForm();
+  const navigation = useNavigation();
+  const navigate = () =>
+    navigation.navigate(isRegistration ? "Login" : "Registration");
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -28,11 +32,19 @@ export const AuthForm = ({ isRegistration }: Props) => {
         >
           <View style={styles.container}>
             <ImageBackground
-              source={require("../../../shared/assets/imgs/auth/bg-auth.jpg")}
+              source={require("../../../../shared/assets/imgs/auth/bg-auth.jpg")}
               resizeMode="cover"
               style={styles.backgroundImage}
             >
-              <View style={styles.box}>
+              <View
+                style={[
+                  styles.box,
+                  isRegistration && styles.boxTopBiggerPadding,
+                ]}
+              >
+                {isRegistration && (
+                  <PhotoLoader addStyles={styles.photoLoader} />
+                )}
                 <Text
                   text={isRegistration ? "Registration" : "Login"}
                   size="xl"
@@ -41,24 +53,41 @@ export const AuthForm = ({ isRegistration }: Props) => {
                 <View style={styles.form}>
                   <Input
                     placeholder="Login"
-                    value={text}
-                    onChangeText={setText}
+                    value={state.login}
+                    onChangeText={(text) =>
+                      dispatch({ type: "SET_LOGIN", payload: text })
+                    }
                   />
                   <Input
                     placeholder="Email"
-                    value={text}
-                    onChangeText={setText}
+                    value={state.email}
+                    onChangeText={(text) =>
+                      dispatch({ type: "SET_EMAIL", payload: text })
+                    }
                   />
                   <Input
                     placeholder="Password"
-                    value={text}
-                    onChangeText={setText}
+                    value={state.password}
+                    onChangeText={(text) =>
+                      dispatch({ type: "SET_PASSWORD", payload: text })
+                    }
                   />
                   <Button
                     text="Submit"
                     addStyles={styles.button}
                     onPress={() => {}}
                   />
+                  <Pressable onPress={navigate}>
+                    <Text
+                      addStyles={styles.link}
+                      size="xs"
+                      text={
+                        isRegistration
+                          ? "Already have account?"
+                          : "Already registered?"
+                      }
+                    />
+                  </Pressable>
                 </View>
               </View>
             </ImageBackground>

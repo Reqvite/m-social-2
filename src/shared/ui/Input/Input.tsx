@@ -21,6 +21,7 @@ export const Input = (props: Props) => {
   return (
     <TextInput
       style={[styles.input, isFocused && styles.focusedInput]}
+      placeholderTextColor={variables.grayColor}
       onFocus={handleFocus}
       onBlur={handleBlur}
       {...otherProps}
