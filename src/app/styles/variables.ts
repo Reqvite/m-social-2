@@ -3,9 +3,10 @@ export const variables = {
   accentColorLight: "rgb(247, 156, 64)",
   linkColor: "rgb(27, 67, 113)",
   grayColor: "rgb(189, 189, 189)",
+  primaryColor: "rgb(255, 255, 255)",
 
   colorWhite: "rgb(255, 255, 255)",
-  bgPrimary: "rgb(255, 255, 255)",
-  bgSecondary: " rgb(246, 246, 246)",
-  borderColor: "rgb(232, 232, 232)",
+  bgPrimary: "rgb(32, 32, 35)",
+  bgSecondary: "rgb(34, 34, 34)",
+  borderColor: "rgb(40, 40, 40)",
 };

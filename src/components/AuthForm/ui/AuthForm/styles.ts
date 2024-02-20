@@ -25,6 +25,7 @@ export const styles = StyleSheet.create({
     gap: 10,
   },
   title: {
+    color: variables.primaryColor,
     marginTop: 20,
     marginBottom: 33,
   },

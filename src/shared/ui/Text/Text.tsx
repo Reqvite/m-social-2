@@ -26,7 +26,7 @@ export const Text = (props: Props) => {
   return (
     <ReactText
       style={[
-        styles.title,
+        styles.text,
         sizeStyles,
         alignStyles,
         bold && styles.bold,
@@ -40,7 +40,7 @@ export const Text = (props: Props) => {
 };
 
 export const styles = StyleSheet.create({
-  title: {
+  text: {
     letterSpacing: 1,
   },
   xs: {

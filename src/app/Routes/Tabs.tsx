@@ -1,6 +1,6 @@
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { CreatePostsScreen, HomeScreen, ProfileScreen } from "@/screens";
 
@@ -8,29 +8,48 @@ import { variables } from "../styles/variables";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-const options = {
-  tabBarActiveTintColor: variables.accentColor,
-  headerShown: false,
-};
-
 export const Tabs = () => {
   return (
-    <Navigator initialRouteName="Home">
+    <Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarStyle: { backgroundColor: variables.bgPrimary },
+        tabBarActiveTintColor: variables.accentColor,
+        tabBarShowLabel: false,
+        headerStyle: {
+          backgroundColor: variables.bgPrimary,
+        },
+        headerTitleStyle: {
+          color: variables.primaryColor,
+          textAlign: "center",
+          fontWeight: "bold",
+          fontSize: 20,
+        },
+        headerRight: () => (
+          <TouchableOpacity activeOpacity={0.8} style={styles.logoutIcon}>
+            <MaterialIcons
+              name="logout"
+              size={24}
+              color={variables.grayColor}
+            />
+          </TouchableOpacity>
+        ),
+      }}
+    >
       <Screen
         name="Post"
         component={HomeScreen}
-        options={({ route }) => ({
-          tabBarStyle: ((route) => {
-            const routeName = getFocusedRouteNameFromRoute(route) ?? "";
-            if (routeName === "Comments" || routeName === "Map") {
-              return { display: "none" };
-            }
-            return;
-          })(route),
+        options={() => ({
+          // tabBarStyle: ((route) => {
+          //   const routeName = getFocusedRouteNameFromRoute(route) ?? "";
+          //   if (routeName === "Comments" || routeName === "Map") {
+          //     return { display: "none" };
+          //   }
+          //   return;
+          // })(route),
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="dynamic-feed" size={size} color={color} />
           ),
-          ...options,
         })}
       />
       <Screen
@@ -40,7 +59,6 @@ export const Tabs = () => {
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="post-add" size={size} color={color} />
           ),
-          ...options,
         }}
       />
       <Screen
@@ -50,9 +68,14 @@ export const Tabs = () => {
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="user" size={size} color={color} />
           ),
-          ...options,
         }}
       />
     </Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  logoutIcon: {
+    marginRight: 15,
+  },
+});

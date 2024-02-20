@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
 import { Suspense, useEffect, useState } from "react";
 
 import { useRoute } from "@/app/Routes/AppRoute";
@@ -36,6 +37,7 @@ export default function App() {
 
   return (
     <Suspense fallback={<Text text="LOADING" />}>
+      <StatusBar style="light" />
       <NavigationContainer>{routing}</NavigationContainer>
     </Suspense>
   );
