@@ -4,19 +4,12 @@ import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
 import { ACTIVE_OPACITY } from "@/shared/const";
+import { PostCardI } from "@/shared/types";
 
 import { ProfileCard } from "../ProfileCard/ProfileCard";
 import { Text } from "../Text/Text";
 
-type Props = {
-  title: string;
-  photoUrl: string;
-  id: string;
-  comments: string;
-  likes: string;
-  location: string;
-  author: string;
-  authorUrl: string;
+type Props = PostCardI & {
   withProfile?: boolean;
 };
 
