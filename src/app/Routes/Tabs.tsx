@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { CreatePostsScreen, HomeScreen, ProfileScreen } from "@/screens";
+import { ACTIVE_OPACITY } from "@/shared/const";
 
 import { variables } from "../styles/variables";
 
@@ -26,7 +27,10 @@ export const Tabs = () => {
           fontSize: 20,
         },
         headerRight: () => (
-          <TouchableOpacity activeOpacity={0.8} style={styles.logoutIcon}>
+          <TouchableOpacity
+            activeOpacity={ACTIVE_OPACITY}
+            style={styles.logoutIcon}
+          >
             <MaterialIcons
               name="logout"
               size={24}

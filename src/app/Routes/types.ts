@@ -2,5 +2,6 @@ export type AppRootParamList = {
   Home: undefined;
   Login: undefined;
   Registration: undefined;
-  Comments: { photo: string; id: string };
+  Comments: { photoUrl: string; id: string };
+  Map: { location: string };
 };

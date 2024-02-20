@@ -1,12 +1,11 @@
-import { View } from "react-native";
-
-import { PostCard } from "@/shared/ui";
+import { PostList } from "@/components/PostsList/PostList";
+import { Container } from "@/shared/ui";
 
 const PostsScreen = () => {
   return (
-    <View>
-      <PostCard />
-    </View>
+    <Container>
+      <PostList />
+    </Container>
   );
 };
 
