@@ -1,10 +1,13 @@
-import { Text, View } from "react-native";
+import { Container, Map, Text } from "@/shared/ui";
 
-const MapScreen = () => {
+type Props = {
+  location?: string;
+};
+const MapScreen = ({ location }: Props) => {
   return (
-    <View>
-      <Text>MapScreen</Text>
-    </View>
+    <Container>
+      {location ? <Map location={location} /> : <Text text="Error" />}
+    </Container>
   );
 };
 

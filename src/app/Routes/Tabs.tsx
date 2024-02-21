@@ -44,13 +44,6 @@ export const Tabs = () => {
         name="Post"
         component={HomeScreen}
         options={() => ({
-          // tabBarStyle: ((route) => {
-          //   const routeName = getFocusedRouteNameFromRoute(route) ?? "";
-          //   if (routeName === "Comments" || routeName === "Map") {
-          //     return { display: "none" };
-          //   }
-          //   return;
-          // })(route),
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="dynamic-feed" size={size} color={color} />
           ),
@@ -63,6 +56,7 @@ export const Tabs = () => {
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="post-add" size={size} color={color} />
           ),
+          headerShown: false,
         }}
       />
       <Screen
@@ -72,6 +66,7 @@ export const Tabs = () => {
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="user" size={size} color={color} />
           ),
+          headerShown: false,
         }}
       />
     </Navigator>

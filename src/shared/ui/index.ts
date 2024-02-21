@@ -2,6 +2,7 @@ export { Button } from "./Button/Button";
 export { Comment } from "./Comment/Comment";
 export { Container } from "./Container/Container";
 export { Input } from "./Input/Input";
+export { Map } from "./Map/Map";
 export { PhotoLoader } from "./PhotoLoader/PhotoLoader";
 export { PostCard } from "./PostCard/PostCard";
 export { ProfileCard } from "./ProfileCard/ProfileCard";

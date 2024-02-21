@@ -1,11 +1,11 @@
-import React from "react";
-import { Text, View } from "react-native";
+import { CreatePost } from "@/components/CreatePost";
+import { Container } from "@/shared/ui";
 
 const CreatePostsScreen = () => {
   return (
-    <View>
-      <Text>CreatePostsScreen</Text>
-    </View>
+    <Container>
+      <CreatePost />
+    </Container>
   );
 };
 

@@ -1,10 +1,12 @@
 import { Text, View } from "react-native";
 
+import { Container } from "@/shared/ui";
+
 const ProfileScreen = () => {
   return (
-    <View>
+    <Container>
       <Text>ProfileScreen</Text>
-    </View>
+    </Container>
   );
 };
 
