@@ -6,6 +6,7 @@ import { variables } from "@/app/styles/variables";
 import { ACTIVE_OPACITY } from "@/shared/const";
 import { PostCardI } from "@/shared/types";
 
+import { Input } from "../Input/Input";
 import { ProfileCard } from "../ProfileCard/ProfileCard";
 import { Text } from "../Text/Text";
 
@@ -35,6 +36,7 @@ export const PostCard = (props: Props) => {
     <>
       {withProfile && <ProfileCard author={author} photoUrl={authorUrl} />}
       <View style={styles.container}>
+        <Input placeholder="Email" variant="withButton" />
         <Image
           source={{
             uri: photoUrl,

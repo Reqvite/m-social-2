@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 
 import { variables } from "@/app/styles/variables";
 
 type Props = {
-  text: string;
+  text?: string;
   addStyles?: object;
+  icon?: ReactNode;
   onPress?: () => void;
 };
 export const Button = (props: Props) => {
-  const { text, addStyles, onPress } = props;
+  const { icon, text, addStyles, onPress } = props;
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePressIn = () => {
@@ -23,6 +24,7 @@ export const Button = (props: Props) => {
     <Pressable
       style={[
         styles.button,
+        icon ? styles.withIcon : null,
         addStyles && addStyles,
         isPressed && styles.buttonPressed,
       ]}
@@ -30,7 +32,7 @@ export const Button = (props: Props) => {
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
     >
-      <Text style={styles.text}>{text}</Text>
+      {icon ? icon : <Text style={styles.text}>{text}</Text>}
     </Pressable>
   );
 };
@@ -42,6 +44,15 @@ const styles = StyleSheet.create({
     height: 51,
     paddingVertical: 16,
     paddingHorizontal: 32,
+  },
+  withIcon: {
+    width: 34,
+    height: 34,
+    borderRadius: 50,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonPressed: {
     backgroundColor: variables.accentColorLight,
