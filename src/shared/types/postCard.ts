@@ -6,7 +6,8 @@ interface PostCardI {
   likes: string;
   location: string;
   author: string;
-  authorUrl: string;
+  authorPhotoUrl: string;
+  authorUrl?: string;
 }
 
 export type { PostCardI };

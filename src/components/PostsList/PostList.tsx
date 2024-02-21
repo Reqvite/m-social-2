@@ -12,7 +12,7 @@ const postData = [
     likes: "20",
     location: "New York",
     author: "John",
-    authorUrl:
+    authorPhotoUrl:
       "https://static.vecteezy.com/vite/assets/photo-masthead-375-b8ae1548.webp",
   },
   {
@@ -24,7 +24,7 @@ const postData = [
     likes: "25",
     location: "Los Angeles",
     author: "Alice",
-    authorUrl:
+    authorPhotoUrl:
       "https://static.vecteezy.com/vite/assets/photo-masthead-375-b8ae1548.webp",
   },
   {
@@ -36,7 +36,7 @@ const postData = [
     likes: "18",
     location: "Chicago",
     author: "Bob",
-    authorUrl:
+    authorPhotoUrl:
       "https://static.vecteezy.com/vite/assets/photo-masthead-375-b8ae1548.webp",
   },
   {
@@ -48,7 +48,7 @@ const postData = [
     likes: "12",
     location: "Houston",
     author: "Emma",
-    authorUrl:
+    authorPhotoUrl:
       "https://static.vecteezy.com/vite/assets/photo-masthead-375-b8ae1548.webp",
   },
   {
@@ -60,7 +60,7 @@ const postData = [
     likes: "30",
     location: "San Francisco",
     author: "David",
-    authorUrl:
+    authorPhotoUrl:
       "https://static.vecteezy.com/vite/assets/photo-masthead-375-b8ae1548.webp",
   },
 ];

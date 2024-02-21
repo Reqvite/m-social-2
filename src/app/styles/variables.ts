@@ -8,5 +8,6 @@ export const variables = {
   colorWhite: "rgb(255, 255, 255)",
   bgPrimary: "rgb(32, 32, 35)",
   bgSecondary: "rgb(34, 34, 34)",
+  bgSecondaryLight: "rgb(50, 50, 50)",
   borderColor: "rgb(40, 40, 40)",
 };

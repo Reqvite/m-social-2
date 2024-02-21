@@ -1,4 +1,5 @@
 export { Button } from "./Button/Button";
+export { Comment } from "./Comment/Comment";
 export { Container } from "./Container/Container";
 export { Input } from "./Input/Input";
 export { PhotoLoader } from "./PhotoLoader/PhotoLoader";

@@ -1,5 +1,7 @@
 /* eslint-disable react-native/no-unused-styles */
-import { StyleSheet, Text as ReactText, TextProps } from "react-native";
+import { Text as ReactText, TextProps } from "react-native";
+
+import { styles } from "./styles";
 
 type sizes = "xs" | "l" | "xl";
 type align = "center" | "left" | "right";
@@ -38,30 +40,3 @@ export const Text = (props: Props) => {
     </ReactText>
   );
 };
-
-export const styles = StyleSheet.create({
-  text: {
-    letterSpacing: 1,
-  },
-  xs: {
-    fontSize: 16,
-  },
-  l: {
-    fontSize: 24,
-  },
-  xl: {
-    fontSize: 30,
-  },
-  bold: {
-    fontWeight: "bold",
-  },
-  center: {
-    textAlign: "center",
-  },
-  left: {
-    textAlign: "left",
-  },
-  right: {
-    textAlign: "right",
-  },
-});

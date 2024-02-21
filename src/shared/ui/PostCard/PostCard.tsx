@@ -1,14 +1,14 @@
 import { AntDesign, EvilIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
 import { ACTIVE_OPACITY } from "@/shared/const";
 import { PostCardI } from "@/shared/types";
 
-import { Input } from "../Input/Input";
 import { ProfileCard } from "../ProfileCard/ProfileCard";
 import { Text } from "../Text/Text";
+import { styles } from "./styles";
 
 type Props = PostCardI & {
   withProfile?: boolean;
@@ -23,7 +23,8 @@ export const PostCard = (props: Props) => {
     likes = "10",
     location = "Washington",
     author = "Leonard",
-    authorUrl,
+    authorPhotoUrl,
+    // authorUrl,
     withProfile = true,
   } = props;
 
@@ -34,9 +35,8 @@ export const PostCard = (props: Props) => {
 
   return (
     <>
-      {withProfile && <ProfileCard author={author} photoUrl={authorUrl} />}
+      {withProfile && <ProfileCard author={author} photoUrl={authorPhotoUrl} />}
       <View style={styles.container}>
-        <Input placeholder="Email" variant="withButton" />
         <Image
           source={{
             uri: photoUrl,
@@ -104,37 +104,3 @@ export const PostCard = (props: Props) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 10,
-  },
-  img: {
-    alignSelf: "center",
-    width: "100%",
-    height: 240,
-    borderRadius: 8,
-  },
-  title: {
-    color: variables.primaryColor,
-    marginTop: 8,
-  },
-  box: { flexDirection: "row", gap: 20 },
-  boxItem: {
-    gap: 5,
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  boxItemRight: {
-    marginLeft: "auto",
-  },
-  boxItemText: {
-    color: variables.colorWhite,
-    marginTop: 5,
-  },
-  locationText: {
-    color: variables.colorWhite,
-    textDecorationLine: "underline",
-  },
-});
