@@ -3,10 +3,11 @@ import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
 
+import { Button } from "../Button/Button";
 import { cameraButtonsStyles } from "./styles";
 
 type Props = {
@@ -30,8 +31,7 @@ export const CameraButtons = (props: Props) => {
     permissionGranted,
   } = props;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, requestPermission] = Camera.useCameraPermissions();
+  const [, requestPermission] = Camera.useCameraPermissions();
 
   const onPermissionDisabled = (callback: () => void) => {
     if (!permissionGranted) {
@@ -45,59 +45,64 @@ export const CameraButtons = (props: Props) => {
     <View style={cameraButtonsStyles.uploadPhotoBox}>
       {isPhoto && (
         <>
-          <TouchableOpacity
-            style={cameraButtonsStyles.cameraBtn}
+          <Button
+            addStyles={cameraButtonsStyles.cameraBtn}
             onPress={deletePhoto}
-          >
-            <MaterialIcons
-              name="delete"
-              size={24}
-              color={variables.colorBlack}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={cameraButtonsStyles.cameraBtn}
+            icon={
+              <MaterialIcons
+                name="delete"
+                size={24}
+                color={variables.colorBlack}
+              />
+            }
+          />
+          <Button
+            addStyles={cameraButtonsStyles.cameraBtn}
             onPress={sharePic}
-          >
-            <EvilIcons
-              name="share-apple"
-              size={30}
-              color={variables.colorBlack}
-            />
-          </TouchableOpacity>
+            icon={
+              <EvilIcons
+                name="share-apple"
+                size={30}
+                color={variables.colorBlack}
+              />
+            }
+          />
         </>
       )}
       {!isPhoto && (
         <>
-          <TouchableOpacity
-            style={cameraButtonsStyles.cameraBtn}
+          <Button
+            addStyles={cameraButtonsStyles.cameraBtn}
             onPress={pickImage}
-          >
-            <AntDesign name="upload" size={24} color={variables.colorBlack} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
+            icon={
+              <AntDesign name="upload" size={24} color={variables.colorBlack} />
+            }
+          />
+          <Button
+            addStyles={[
               cameraButtonsStyles.cameraBtn,
               cameraButtonsStyles.cameraBtnBig,
             ]}
             onPress={() => onPermissionDisabled(takePic)}
-          >
-            <FontAwesome5
-              name="camera"
-              size={24}
-              color={variables.colorBlack}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={cameraButtonsStyles.cameraBtn}
+            icon={
+              <FontAwesome5
+                name="camera"
+                size={24}
+                color={variables.colorBlack}
+              />
+            }
+          />
+          <Button
+            addStyles={cameraButtonsStyles.cameraBtn}
             onPress={() => onPermissionDisabled(toggleCameraType)}
-          >
-            <MaterialIcons
-              name="flip-camera-ios"
-              size={24}
-              color={variables.colorBlack}
-            />
-          </TouchableOpacity>
+            icon={
+              <MaterialIcons
+                name="flip-camera-ios"
+                size={24}
+                color={variables.colorBlack}
+              />
+            }
+          />
         </>
       )}
     </View>

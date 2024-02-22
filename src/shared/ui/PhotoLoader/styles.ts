@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
   box: {
     width: 120,
     height: 120,
-    backgroundColor: "white",
+    backgroundColor: variables.bgSecondaryLight,
     borderRadius: 16,
   },
   icon: {

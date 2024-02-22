@@ -4,13 +4,20 @@ import * as ImagePicker from "expo-image-picker";
 import { shareAsync } from "expo-sharing";
 import { useRef, useState } from "react";
 
-export const usePhotoLoader = () => {
+export const usePhotoLoader = (
+  getPhoto: (photo: string | undefined) => void,
+) => {
   const cameraRef = useRef<Camera>();
 
   const [type, setType] = useState(CameraType.back);
   const [hasCameraPermission] = Camera.useCameraPermissions();
 
   const [photo, setPhoto] = useState<string | undefined>(undefined);
+
+  const setDownloadPhoto = (photo: string | undefined) => {
+    setPhoto(photo);
+    getPhoto(photo);
+  };
 
   const takePic = async () => {
     const options = {
@@ -27,9 +34,9 @@ export const usePhotoLoader = () => {
           [{ rotate: 180 }, { flip: FlipType.Vertical }],
           { compress: 1, format: SaveFormat.PNG },
         );
-        setPhoto(manipResult.uri);
+        setDownloadPhoto(manipResult.uri);
       } else {
-        setPhoto(newPhoto.uri);
+        setDownloadPhoto(newPhoto.uri);
       }
     }
   };
@@ -42,12 +49,12 @@ export const usePhotoLoader = () => {
       quality: 1,
     });
     if (!result.canceled) {
-      setPhoto(result.assets[0].uri);
+      setDownloadPhoto(result.assets[0].uri);
     }
   };
 
   const deletePhoto = () => {
-    setPhoto(undefined);
+    setDownloadPhoto(undefined);
   };
 
   const toggleCameraType = () => {
