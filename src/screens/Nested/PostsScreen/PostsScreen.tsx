@@ -1,4 +1,4 @@
-import { PostList } from "@/components/PostsList/PostList";
+import { PostList } from "@/components/PostsList";
 import { Container } from "@/shared/ui";
 
 const PostsScreen = () => {

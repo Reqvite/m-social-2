@@ -65,14 +65,21 @@ const postData = [
   },
 ];
 
-export const PostList = () => {
+type Props = {
+  withProfile?: boolean;
+};
+
+export const PostList = (props: Props) => {
+  const { withProfile = true } = props;
   return (
     <SafeAreaView>
       <FlatList
         contentContainerStyle={styles.list}
         data={postData}
         showsVerticalScrollIndicator={false}
-        renderItem={(post) => <PostCard {...post.item} />}
+        renderItem={(post) => (
+          <PostCard {...post.item} withProfile={withProfile} />
+        )}
         keyExtractor={(item) => item.id}
       />
     </SafeAreaView>

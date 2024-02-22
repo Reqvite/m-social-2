@@ -25,7 +25,7 @@ export const PostCard = (props: Props) => {
     author = "Leonard",
     authorPhotoUrl,
     // authorUrl,
-    withProfile = true,
+    withProfile,
   } = props;
 
   const navigation = useNavigation();

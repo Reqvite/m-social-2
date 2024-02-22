@@ -29,11 +29,11 @@ export default function App() {
     prepare();
   }, []);
 
+  const routing = useRoute(true);
+
   if (!appIsReady || !fontsLoaded) {
     return null;
   }
-
-  const routing = useRoute(true);
 
   return (
     <Suspense fallback={<Text text="LOADING" />}>

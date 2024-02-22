@@ -1,4 +1,4 @@
-import { AuthForm } from "@/components";
+import { AuthForm } from "@/components/AuthForm";
 
 const RegisterScreen = () => {
   return <AuthForm isRegistration />;

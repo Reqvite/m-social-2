@@ -21,10 +21,11 @@ export const Tabs = () => {
           backgroundColor: variables.bgPrimary,
         },
         headerTitleStyle: {
-          color: variables.primaryColor,
-          textAlign: "center",
-          fontWeight: "bold",
-          fontSize: 20,
+          // color: variables.primaryColor,
+          // textAlign: "center",
+          // fontWeight: "bold",
+          // fontSize: 20,
+          display: "none",
         },
         headerRight: () => (
           <TouchableOpacity
@@ -66,7 +67,6 @@ export const Tabs = () => {
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="user" size={size} color={color} />
           ),
-          headerShown: false,
         }}
       />
     </Navigator>
