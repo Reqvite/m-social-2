@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     width: "100%",
     height: 240,
-    borderRadius: 8,
+    borderRadius: variables.primaryBorderRadius,
   },
   title: {
     color: variables.primaryColor,

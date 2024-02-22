@@ -2,9 +2,12 @@ import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Camera } from "expo-camera";
+import { TouchableOpacity, View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
+
+import { cameraButtonsStyles } from "./styles";
 
 type Props = {
   pickImage: () => void;
@@ -26,18 +29,36 @@ export const CameraButtons = (props: Props) => {
     sharePic,
     permissionGranted,
   } = props;
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, requestPermission] = Camera.useCameraPermissions();
+
+  const onPermissionDisabled = (callback: () => void) => {
+    if (!permissionGranted) {
+      requestPermission();
+    } else {
+      callback();
+    }
+  };
+
   return (
-    <View style={styles.uploadPhotoBox}>
+    <View style={cameraButtonsStyles.uploadPhotoBox}>
       {isPhoto && (
         <>
-          <TouchableOpacity style={styles.cameraBtn} onPress={deletePhoto}>
+          <TouchableOpacity
+            style={cameraButtonsStyles.cameraBtn}
+            onPress={deletePhoto}
+          >
             <MaterialIcons
               name="delete"
               size={24}
               color={variables.colorBlack}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.cameraBtn} onPress={sharePic}>
+          <TouchableOpacity
+            style={cameraButtonsStyles.cameraBtn}
+            onPress={sharePic}
+          >
             <EvilIcons
               name="share-apple"
               size={30}
@@ -48,13 +69,18 @@ export const CameraButtons = (props: Props) => {
       )}
       {!isPhoto && (
         <>
-          <TouchableOpacity style={styles.cameraBtn} onPress={pickImage}>
+          <TouchableOpacity
+            style={cameraButtonsStyles.cameraBtn}
+            onPress={pickImage}
+          >
             <AntDesign name="upload" size={24} color={variables.colorBlack} />
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.cameraBtn, styles.cameraBtnBig]}
-            onPress={takePic}
-            disabled={!permissionGranted}
+            style={[
+              cameraButtonsStyles.cameraBtn,
+              cameraButtonsStyles.cameraBtnBig,
+            ]}
+            onPress={() => onPermissionDisabled(takePic)}
           >
             <FontAwesome5
               name="camera"
@@ -62,7 +88,10 @@ export const CameraButtons = (props: Props) => {
               color={variables.colorBlack}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.cameraBtn} onPress={toggleCameraType}>
+          <TouchableOpacity
+            style={cameraButtonsStyles.cameraBtn}
+            onPress={() => onPermissionDisabled(toggleCameraType)}
+          >
             <MaterialIcons
               name="flip-camera-ios"
               size={24}
@@ -74,27 +103,3 @@ export const CameraButtons = (props: Props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  uploadPhotoBox: {
-    zIndex: 100,
-    position: "absolute",
-    flexDirection: "row",
-    alignItems: "center",
-    alignSelf: "center",
-    bottom: 20,
-    gap: 15,
-  },
-  cameraBtn: {
-    width: 45,
-    height: 45,
-    borderRadius: 50,
-    backgroundColor: variables.grayColor,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  cameraBtnBig: {
-    width: 60,
-    height: 60,
-  },
-});

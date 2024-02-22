@@ -11,6 +11,9 @@ export const variables = {
 
   borderColor: "rgb(40, 40, 40)",
 
+  //radius
+  primaryBorderRadius: 8,
+
   //colors
   grayColor: "rgb(189, 189, 189)",
   colorBlack: "#000000",
