@@ -57,7 +57,6 @@ export const Tabs = () => {
             <MaterialIcons name="post-add" size={size} color={color} />
           ),
           headerShown: false,
-          tabBarHideOnKeyboard: true,
         }}
       />
       <Screen

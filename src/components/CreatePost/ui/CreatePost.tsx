@@ -1,24 +1,41 @@
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
-import { useState } from "react";
 import { View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
 import { Button, Input, KeyboardAvoidingView, PhotoLoader } from "@/shared/ui";
 
+import { useCreatePost } from "../model/useCreatePost";
 import { styles } from "./styles";
 
 export const CreatePost = () => {
-  const [, setPhoto] = useState<undefined | string>(undefined);
+  const { dispatch, state } = useCreatePost();
+
   return (
     <KeyboardAvoidingView>
       <View style={styles.container}>
         <View>
-          <PhotoLoader setPhoto={setPhoto} />
+          <PhotoLoader
+            photo={state.photo}
+            onChangePhoto={(photo) =>
+              dispatch({ type: "SET_PHOTO", payload: photo })
+            }
+          />
           <View style={styles.form}>
-            <Input placeholder="Title" variant="underline" />
             <Input
+              value={state.title}
+              placeholder="Title"
+              variant="underline"
+              onChangeText={(text) =>
+                dispatch({ type: "SET_TITLE", payload: text })
+              }
+            />
+            <Input
+              value={state.location}
               placeholder="Location"
               variant="underline"
+              onChangeText={(text) =>
+                dispatch({ type: "SET_LOCATION", payload: text })
+              }
               leftAddon={
                 <Entypo
                   name="location-pin"
@@ -32,7 +49,7 @@ export const CreatePost = () => {
         </View>
         <Button
           addStyles={styles.deleteButton}
-          // onPress={deletePhoto}
+          onPress={() => dispatch({ type: "RESET_STATE" })}
           icon={
             <MaterialIcons
               name="delete"

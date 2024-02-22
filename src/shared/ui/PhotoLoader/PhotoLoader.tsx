@@ -14,13 +14,19 @@ import { styles } from "./styles";
 type loaderVariants = "small" | "big";
 
 type Props = {
+  photo?: string | undefined;
   addStyles?: object;
   variant?: loaderVariants;
-  setPhoto?: (photo: string | undefined) => void;
+  onChangePhoto?: (photo: string | undefined) => void;
 };
 
 export const PhotoLoader = (props: Props) => {
-  const { addStyles, variant = "big", setPhoto = () => {} } = props;
+  const {
+    photo: photoProps,
+    addStyles,
+    variant = "big",
+    onChangePhoto = () => {},
+  } = props;
 
   const {
     photo,
@@ -32,7 +38,7 @@ export const PhotoLoader = (props: Props) => {
     pickImage,
     takePic,
     sharePic,
-  } = usePhotoLoader(setPhoto);
+  } = usePhotoLoader(onChangePhoto, photoProps);
 
   if (!hasCameraPermission) {
     return <Text text="Requesting permissions..." />;
