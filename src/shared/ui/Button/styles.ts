@@ -10,6 +10,11 @@ export const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 32,
   },
+  clear: {
+    backgroundColor: "transparent",
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+  },
   withIcon: {
     width: 34,
     height: 34,
@@ -21,6 +26,9 @@ export const styles = StyleSheet.create({
   },
   buttonPressed: {
     backgroundColor: variables.accentColorLight,
+  },
+  buttonClearPressed: {
+    color: variables.accentColor,
   },
   text: {
     textAlign: "center",

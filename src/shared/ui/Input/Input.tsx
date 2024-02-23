@@ -10,14 +10,21 @@ import { styles } from "./styles";
 
 type InputVariant = "default" | "underline" | "withButton";
 
-type Props = TextInputProps & {
+export type InputBaseProps = TextInputProps & {
   variant?: InputVariant;
   leftAddon?: ReactNode;
+  rightAddon?: ReactNode;
   onPress?: () => void;
 };
 
-export const Input = (props: Props) => {
-  const { leftAddon, variant = "default", onPress, ...otherProps } = props;
+export const Input = (props: InputBaseProps) => {
+  const {
+    leftAddon,
+    rightAddon,
+    variant = "default",
+    onPress,
+    ...otherProps
+  } = props;
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -32,7 +39,7 @@ export const Input = (props: Props) => {
 
   const withButton = variant === "withButton";
 
-  if (leftAddon || withButton) {
+  if (leftAddon || withButton || rightAddon) {
     return (
       <View style={styles.containerWithAddon}>
         {leftAddon && <View style={styles.leftAddon}>{leftAddon}</View>}
@@ -48,6 +55,7 @@ export const Input = (props: Props) => {
           onBlur={handleBlur}
           {...otherProps}
         />
+        {rightAddon && <View style={styles.rightAddon}>{rightAddon}</View>}
         {withButton && (
           <Button
             onPress={onPress}

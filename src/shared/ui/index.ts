@@ -2,6 +2,7 @@ export { Button } from "./Button/Button";
 export { Comment } from "./Comment/Comment";
 export { Container } from "./Container/Container";
 export { Input } from "./Input/Input";
+export { LocationInput } from "./Input/LocationInput";
 export { KeyboardAvoidingView } from "./KeyboardAvoidingView/KeyboardAvoidingView";
 export { Map } from "./Map/Map";
 export { PhotoLoader } from "./PhotoLoader/PhotoLoader";

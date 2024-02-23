@@ -1,8 +1,15 @@
-import { Entypo, MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useCallback } from "react";
 import { View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
-import { Button, Input, KeyboardAvoidingView, PhotoLoader } from "@/shared/ui";
+import {
+  Button,
+  Input,
+  KeyboardAvoidingView,
+  LocationInput,
+  PhotoLoader,
+} from "@/shared/ui";
 
 import { useCreatePost } from "../model/useCreatePost";
 import { styles } from "./styles";
@@ -10,6 +17,12 @@ import { styles } from "./styles";
 export const CreatePost = () => {
   const { dispatch, state } = useCreatePost();
 
+  const setLocation = useCallback(
+    (location: string) => {
+      dispatch({ type: "SET_LOCATION", payload: location });
+    },
+    [dispatch],
+  );
   return (
     <KeyboardAvoidingView>
       <View style={styles.container}>
@@ -29,20 +42,14 @@ export const CreatePost = () => {
                 dispatch({ type: "SET_TITLE", payload: text })
               }
             />
-            <Input
+            <LocationInput
               value={state.location}
               placeholder="Location"
               variant="underline"
               onChangeText={(text) =>
                 dispatch({ type: "SET_LOCATION", payload: text })
               }
-              leftAddon={
-                <Entypo
-                  name="location-pin"
-                  size={24}
-                  color={variables.primaryColor}
-                />
-              }
+              setValue={setLocation}
             />
           </View>
           <Button text="Publish" addStyles={styles.button} />

@@ -37,6 +37,12 @@ export const styles = StyleSheet.create({
     top: 10,
     left: 0,
   },
+  rightAddon: {
+    position: "absolute",
+    zIndex: 10,
+    top: 10,
+    right: 0,
+  },
   inputWithAddon: {
     paddingLeft: 30,
     paddingRight: 30,
@@ -46,5 +52,11 @@ export const styles = StyleSheet.create({
     zIndex: 10,
     top: 10,
     right: 10,
+  },
+});
+
+export const locationInputStyles = StyleSheet.create({
+  locationButton: {
+    textDecorationLine: "underline",
   },
 });
