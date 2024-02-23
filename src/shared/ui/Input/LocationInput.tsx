@@ -1,9 +1,9 @@
 import { Entypo } from "@expo/vector-icons";
-import { ActivityIndicator } from "react-native";
 
 import { variables } from "@/app/styles/variables";
 
 import { Button } from "../Button/Button";
+import { Loader } from "../Loader/Loader";
 import { Input, InputBaseProps } from "./Input";
 import { useLocationInput } from "./model/useLocationInput";
 import { locationInputStyles } from "./styles";
@@ -23,7 +23,7 @@ export const LocationInput = (props: Props) => {
       }
       rightAddon={
         isLoading ? (
-          <ActivityIndicator size="small" color={variables.accentColor} />
+          <Loader />
         ) : (
           <Button
             onPress={getLocation}

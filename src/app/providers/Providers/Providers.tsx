@@ -1,9 +1,11 @@
 import { ReactNode } from "react";
 
+import { StoreProvider } from "../StoreProvider/ui/StoreProvider";
+
 type props = {
   children: ReactNode;
 };
 
 export const Providers = ({ children }: props) => {
-  return <>{children}</>;
+  return <StoreProvider>{children}</StoreProvider>;
 };

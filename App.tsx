@@ -4,6 +4,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { Suspense, useEffect, useState } from "react";
 
+import { Providers } from "@/app";
 import { useRoute } from "@/app/Routes/AppRoute";
 import { Text } from "@/shared/ui";
 
@@ -36,9 +37,11 @@ export default function App() {
   }
 
   return (
-    <Suspense fallback={<Text text="LOADING" />}>
-      <StatusBar style="light" />
-      <NavigationContainer>{routing}</NavigationContainer>
-    </Suspense>
+    <Providers>
+      <Suspense fallback={<Text text="LOADING" />}>
+        <StatusBar style="light" />
+        <NavigationContainer>{routing}</NavigationContainer>
+      </Suspense>
+    </Providers>
   );
 }
