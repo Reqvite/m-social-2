@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import { StoreProvider } from "../StoreProvider/ui/StoreProvider";
 
 type props = {
@@ -7,5 +8,9 @@ type props = {
 };
 
 export const Providers = ({ children }: props) => {
-  return <StoreProvider>{children}</StoreProvider>;
+  return (
+    <StoreProvider>
+      <ErrorBoundary>{children}</ErrorBoundary>
+    </StoreProvider>
+  );
 };

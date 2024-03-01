@@ -5,6 +5,7 @@ import HomeScreen from "./Main/HomeScreen/HomeScreen";
 import { ProfileScreenAsync } from "./Main/ProfileScreen/ProfileScreen.async";
 export { HomeScreen };
 export { LoginScreen };
+export { ErrorScreen } from "./Main/ErrorScreen/ErrorScreen";
 
 export { ProfileScreenAsync as ProfileScreen };
 export { CreatePostsScreenAsync as CreatePostsScreen };

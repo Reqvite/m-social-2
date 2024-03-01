@@ -10,4 +10,12 @@ interface PostCardI {
   authorUrl?: string;
 }
 
-export type { PostCardI };
+type PostI = PostCardI;
+
+type PostCreateRequest = {
+  photo: string;
+  location: string;
+  title: string;
+};
+
+export type { PostCardI, PostCreateRequest, PostI };

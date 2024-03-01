@@ -35,6 +35,7 @@ export const AuthForm = ({ isRegistration }: Props) => {
           >
             {isRegistration && (
               <PhotoLoader
+                photo={state.photo}
                 variant="small"
                 addStyles={styles.photoLoader}
                 onChangePhoto={(photo) =>

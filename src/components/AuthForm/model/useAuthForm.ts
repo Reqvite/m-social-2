@@ -7,6 +7,7 @@ import { useReducer, useState } from "react";
 import { Alert } from "react-native";
 
 import { FIREBASE_AUTH } from "@/app/configs/firebaseConfig";
+import { savePhoto } from "@/shared/lib/firebase/photos";
 import { validateUserAuthForm } from "@/shared/lib/validations";
 
 type FormState = {
@@ -57,14 +58,13 @@ export const useAuthForm = () => {
       validateUserAuthForm({
         body: state,
       });
-      const resp = await signInWithEmailAndPassword(
+      await signInWithEmailAndPassword(
         FIREBASE_AUTH,
         state.email,
         state.password,
       );
-      console.log(resp);
+      dispatch({ type: "RESET_STATE" });
     } catch (e) {
-      setIsLoading(false);
       Alert.alert(e.message);
     } finally {
       setIsLoading(false);
@@ -79,6 +79,10 @@ export const useAuthForm = () => {
         body: state,
         isRegister: true,
       });
+      let photo = undefined;
+      if (state?.photo) {
+        photo = await savePhoto(state.photo);
+      }
       const { user } = await createUserWithEmailAndPassword(
         FIREBASE_AUTH,
         state.email,
@@ -86,10 +90,10 @@ export const useAuthForm = () => {
       );
       await updateProfile(user, {
         displayName: state.login,
-        photoURL: state.photo,
+        photoURL: photo,
       });
+      dispatch({ type: "RESET_STATE" });
     } catch (e) {
-      setIsLoading(false);
       Alert.alert(e.message);
     } finally {
       setIsLoading(false);

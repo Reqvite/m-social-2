@@ -2,10 +2,11 @@ import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import { RefObject } from "react";
-import { Image, Pressable, View } from "react-native";
+import { Image, View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
 
+import { Button } from "../Button/Button";
 import { Text } from "../Text/Text";
 import { CameraButtons } from "./CameraButtons";
 import { usePhotoLoader } from "./model/usePhotoLoader";
@@ -85,24 +86,25 @@ export const PhotoLoader = (props: Props) => {
             }}
           />
         )}
-        <Pressable
+        <Button
           style={styles.icon}
           onPress={photo ? deletePhoto : pickImage}
-        >
-          {photo ? (
-            <Entypo
-              name="circle-with-cross"
-              size={32}
-              color={variables.accentColor}
-            />
-          ) : (
-            <AntDesign
-              name="pluscircleo"
-              size={30}
-              color={variables.accentColor}
-            />
-          )}
-        </Pressable>
+          icon={
+            photo ? (
+              <Entypo
+                name="circle-with-cross"
+                size={32}
+                color={variables.accentColor}
+              />
+            ) : (
+              <AntDesign
+                name="pluscircleo"
+                size={30}
+                color={variables.accentColor}
+              />
+            )
+          }
+        />
       </View>
     );
   }

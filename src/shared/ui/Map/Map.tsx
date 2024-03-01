@@ -6,6 +6,7 @@ import { styles } from "./styles";
 type Props = {
   location: string;
 };
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Map = ({ location }: Props) => {
   return (
     <View style={styles.container}>

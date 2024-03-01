@@ -5,6 +5,8 @@ import {
   type UnknownAction,
 } from "@reduxjs/toolkit";
 
+import { rtkApi } from "@/shared/api/rtkApi";
+
 // import { type notificationApi } from "~/libs/packages/notification/notification.js";
 // import { type authApi } from "~/packages/auth/auth.js";
 // import { type commentApi } from "~/packages/comment/comment.js";
@@ -15,7 +17,8 @@ import {
 // import { type reducer as threadReducer } from "~/slices/thread/thread.js";
 
 type RootReducer = {
-  //   profile: ReturnType<typeof profileReducer>;
+  [rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
+
   //   posts: ReturnType<typeof threadReducer>;
 };
 
@@ -40,4 +43,9 @@ type StorePackage = {
   extraArguments: ExtraArguments;
 };
 
-export { type ExtraArguments, type StoreInstance, type StorePackage };
+export {
+  type ExtraArguments,
+  type RootReducer,
+  type StoreInstance,
+  type StorePackage,
+};

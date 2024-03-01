@@ -1,22 +1,27 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, ReducersMapObject } from "@reduxjs/toolkit";
 import {
   FLUSH,
   PAUSE,
   PERSIST,
-  persistReducer,
   persistStore,
   PURGE,
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
 
-import { ExtraArguments, StoreInstance, StorePackage } from "../types";
+import { rtkApi } from "@/shared/api/rtkApi";
 
-const persistConfig = {
-  key: "root",
-  storage: AsyncStorage,
-};
+import {
+  ExtraArguments,
+  RootReducer,
+  StoreInstance,
+  StorePackage,
+} from "../types";
+
+// const persistConfig = {
+//   key: "root",
+//   storage: AsyncStorage,
+// };
 
 class Store implements StorePackage {
   #instance: StoreInstance;
@@ -29,16 +34,18 @@ class Store implements StorePackage {
   }
 
   public constructor() {
-    // const rootReducer = {};
-    const persistedReducer = persistReducer(persistConfig, () => {});
+    const rootReducer: ReducersMapObject<RootReducer> = {
+      [rtkApi.reducerPath]: rtkApi.reducer,
+    };
+    // const persistedReducer = persistReducer(persistConfig, rootReducer);
     this.#instance = configureStore({
-      reducer: persistedReducer,
+      reducer: rootReducer,
       middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
           serializableCheck: {
             ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
           },
-        }),
+        }).concat(rtkApi.middleware),
     });
   }
 

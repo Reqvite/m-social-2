@@ -1,2 +1,1 @@
-export type { PostCardI } from "./postCard";
-export type { UserAuthResponse } from "./user";
+export type { PostCardI } from "./post";
