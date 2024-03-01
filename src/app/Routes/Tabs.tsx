@@ -1,10 +1,11 @@
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { CreatePostsScreen, HomeScreen, ProfileScreen } from "@/screens";
-import { ACTIVE_OPACITY } from "@/shared/const";
+import { Button } from "@/shared/ui";
 
+import { FIREBASE_AUTH } from "../configs/firebaseConfig";
 import { variables } from "../styles/variables";
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -28,16 +29,17 @@ export const Tabs = () => {
           display: "none",
         },
         headerRight: () => (
-          <TouchableOpacity
-            activeOpacity={ACTIVE_OPACITY}
+          <Button
             style={styles.logoutIcon}
-          >
-            <MaterialIcons
-              name="logout"
-              size={24}
-              color={variables.grayColor}
-            />
-          </TouchableOpacity>
+            onPress={() => FIREBASE_AUTH.signOut()}
+            icon={
+              <MaterialIcons
+                name="logout"
+                size={24}
+                color={variables.grayColor}
+              />
+            }
+          />
         ),
       }}
     >

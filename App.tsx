@@ -30,7 +30,7 @@ export default function App() {
     prepare();
   }, []);
 
-  const routing = useRoute(true);
+  const routing = useRoute();
 
   if (!appIsReady || !fontsLoaded) {
     return null;

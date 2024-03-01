@@ -1,11 +1,15 @@
 import { ReactNode, useState } from "react";
-import { Pressable, Text } from "react-native";
+import { Pressable, PressableProps, Text } from "react-native";
 
+import { variables } from "@/app/styles/variables";
+
+import { Loader } from "../Loader/Loader";
 import { styles } from "./styles";
 
 type buttonVariants = "clear";
 
-type Props = {
+type Props = PressableProps & {
+  isLoading?: boolean;
   text?: string;
   addStyles?: object;
   icon?: ReactNode;
@@ -13,7 +17,8 @@ type Props = {
   variant?: buttonVariants;
 };
 export const Button = (props: Props) => {
-  const { icon, text, addStyles, variant, onPress } = props;
+  const { isLoading, icon, text, addStyles, variant, onPress, ...otherProps } =
+    props;
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePressIn = () => {
@@ -36,8 +41,11 @@ export const Button = (props: Props) => {
       onPress={onPress}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
+      {...otherProps}
     >
-      {icon ? (
+      {isLoading ? (
+        <Loader color={variables.colorWhite} />
+      ) : icon ? (
         icon
       ) : (
         <Text

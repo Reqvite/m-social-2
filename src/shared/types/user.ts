@@ -5,31 +5,11 @@ type User = {
   createdAt: string;
 };
 
-type UserAuthResponse = User;
-
-type UserLoginRequestDto = {
+type UserAuthRequest = {
+  photo?: string;
+  login?: string;
   email: string;
   password: string;
 };
 
-type UserLoginResponseDto = {
-  user: UserAuthResponse;
-  token: string;
-};
-
-type UserRegisterRequestDto = {
-  email: string;
-  username: string;
-  password: string;
-};
-
-type UserRegisterResponseDto = UserLoginResponseDto;
-
-export {
-  User,
-  UserAuthResponse,
-  UserLoginRequestDto,
-  UserLoginResponseDto,
-  UserRegisterRequestDto,
-  UserRegisterResponseDto,
-};
+export { User, UserAuthRequest };

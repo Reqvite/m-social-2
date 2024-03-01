@@ -3,14 +3,19 @@ import { Dimensions, StyleSheet, View, ViewProps } from "react-native";
 import { variables } from "@/app/styles/variables";
 
 type Props = ViewProps & {
+  addStyles?: object;
   withoutPadding?: boolean;
 };
 
 export const Container = (props: Props) => {
-  const { children, withoutPadding = false, ...otherProps } = props;
+  const { children, addStyles, withoutPadding = false, ...otherProps } = props;
   return (
     <View
-      style={[styles.container, withoutPadding && styles.withoutPadding]}
+      style={[
+        styles.container,
+        withoutPadding && styles.withoutPadding,
+        addStyles && addStyles,
+      ]}
       {...otherProps}
     >
       {children}

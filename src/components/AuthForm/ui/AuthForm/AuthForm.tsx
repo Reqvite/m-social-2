@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const AuthForm = ({ isRegistration }: Props) => {
-  const { dispatch, state } = useAuthForm();
+  const { dispatch, state, onSignIn, onSignUp, isLoading } = useAuthForm();
   const navigation = useNavigation();
   const navigate = () =>
     navigation.navigate(isRegistration ? "Login" : "Registration");
@@ -34,7 +34,13 @@ export const AuthForm = ({ isRegistration }: Props) => {
             style={[styles.box, isRegistration && styles.boxTopBiggerPadding]}
           >
             {isRegistration && (
-              <PhotoLoader variant="small" addStyles={styles.photoLoader} />
+              <PhotoLoader
+                variant="small"
+                addStyles={styles.photoLoader}
+                onChangePhoto={(photo) =>
+                  dispatch({ type: "SET_PHOTO", payload: photo })
+                }
+              />
             )}
             <Text
               text={isRegistration ? "Registration" : "Login"}
@@ -42,13 +48,15 @@ export const AuthForm = ({ isRegistration }: Props) => {
               addStyles={styles.title}
             />
             <View style={styles.form}>
-              <Input
-                placeholder="Login"
-                value={state.login}
-                onChangeText={(text) =>
-                  dispatch({ type: "SET_LOGIN", payload: text })
-                }
-              />
+              {isRegistration && (
+                <Input
+                  placeholder="Login"
+                  value={state.login}
+                  onChangeText={(text) =>
+                    dispatch({ type: "SET_LOGIN", payload: text })
+                  }
+                />
+              )}
               <Input
                 placeholder="Email"
                 value={state.email}
@@ -64,9 +72,11 @@ export const AuthForm = ({ isRegistration }: Props) => {
                 }
               />
               <Button
+                isLoading={isLoading}
+                disabled={isLoading}
                 text="Submit"
                 addStyles={styles.button}
-                onPress={() => {}}
+                onPress={isRegistration ? onSignUp : onSignIn}
               />
               <Pressable onPress={navigate}>
                 <Text

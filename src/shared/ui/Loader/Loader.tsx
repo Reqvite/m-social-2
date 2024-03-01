@@ -1,4 +1,3 @@
-import React from "react";
 import { ActivityIndicator, ActivityIndicatorProps } from "react-native";
 
 import { variables } from "@/app/styles/variables";
