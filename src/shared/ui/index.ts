@@ -9,4 +9,5 @@ export { Map } from "./Map/Map";
 export { PhotoLoader } from "./PhotoLoader/PhotoLoader";
 export { PostCard } from "./PostCard/PostCard";
 export { ProfileCard } from "./ProfileCard/ProfileCard";
+export { ProgressBar } from "./ProgressBar/ProgressBar";
 export { Text } from "./Text/Text";

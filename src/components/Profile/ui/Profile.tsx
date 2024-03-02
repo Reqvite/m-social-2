@@ -1,10 +1,14 @@
 import { PostList } from "@/components/PostsList";
 import { ProfileCard } from "@/shared/ui";
 
-export const Profile = () => {
-  const author = "Leonard";
-  const authorPhotoUrl =
-    "https://static.vecteezy.com/vite/assets/photo-masthead-375-b8ae1548.webp";
+type Props = {
+  author: string;
+  authorPhotoUrl?: string | null;
+};
+
+export const Profile = (props: Props) => {
+  const { author, authorPhotoUrl = "" } = props;
+
   return (
     <>
       <ProfileCard author={author} photoUrl={authorPhotoUrl} />

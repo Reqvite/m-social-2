@@ -17,7 +17,8 @@ type Props = {
 };
 
 export const AuthForm = ({ isRegistration }: Props) => {
-  const { dispatch, state, onSignIn, onSignUp, isLoading } = useAuthForm();
+  const { dispatch, state, onSignIn, onSignUp, isLoading, progress } =
+    useAuthForm();
   const navigation = useNavigation();
   const navigate = () =>
     navigation.navigate(isRegistration ? "Login" : "Registration");
@@ -37,6 +38,7 @@ export const AuthForm = ({ isRegistration }: Props) => {
               <PhotoLoader
                 photo={state.photo}
                 variant="small"
+                progress={progress}
                 addStyles={styles.photoLoader}
                 onChangePhoto={(photo) =>
                   dispatch({ type: "SET_PHOTO", payload: photo })

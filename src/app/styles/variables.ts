@@ -2,6 +2,7 @@ export const variables = {
   //app colors
   accentColor: "rgb(255, 108, 0)",
   accentColorLight: "rgb(247, 156, 64)",
+  accentColorLightTransparent: "rgba(247, 156, 64, 0.5)",
   linkColor: "rgb(27, 67, 113)",
   primaryColor: "rgb(255, 255, 255)",
 

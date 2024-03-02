@@ -7,7 +7,7 @@ import { useReducer, useState } from "react";
 import { Alert } from "react-native";
 
 import { FIREBASE_AUTH } from "@/app/configs/firebaseConfig";
-import { savePhoto } from "@/shared/lib/firebase/photos";
+import { deletePhoto, savePhoto } from "@/shared/lib/firebase/photos";
 import { validateUserAuthForm } from "@/shared/lib/validations";
 
 type FormState = {
@@ -49,6 +49,7 @@ const formReducer = (state: FormState, action: Action): FormState => {
 };
 
 export const useAuthForm = () => {
+  const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [state, dispatch] = useReducer(formReducer, initialState);
 
@@ -68,37 +69,45 @@ export const useAuthForm = () => {
       Alert.alert(e.message);
     } finally {
       setIsLoading(false);
+      setProgress(0);
     }
   };
 
+  const onProgress = (progress: number) => {
+    setProgress(progress);
+  };
+
   const onSignUp = async () => {
+    let photo = undefined;
     try {
       setIsLoading(true);
-
       validateUserAuthForm({
         body: state,
         isRegister: true,
       });
-      let photo = undefined;
-      if (state?.photo) {
-        photo = await savePhoto(state.photo);
-      }
       const { user } = await createUserWithEmailAndPassword(
         FIREBASE_AUTH,
         state.email,
         state.password,
       );
+      if (state?.photo) {
+        photo = await savePhoto(state.photo, onProgress);
+      }
       await updateProfile(user, {
         displayName: state.login,
-        photoURL: photo,
+        photoURL: photo?.downloadUrl,
       });
       dispatch({ type: "RESET_STATE" });
     } catch (e) {
+      if (photo) {
+        await deletePhoto(photo?.downloadUrl);
+      }
       Alert.alert(e.message);
     } finally {
       setIsLoading(false);
+      setProgress(0);
     }
   };
 
-  return { dispatch, state, isLoading, onSignIn, onSignUp };
+  return { dispatch, state, isLoading, onSignIn, onSignUp, progress };
 };

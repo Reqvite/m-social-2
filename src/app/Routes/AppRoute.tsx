@@ -10,6 +10,7 @@ import { Tabs } from "./Tabs";
 export const useRoute = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  // const auth = FIREBASE_AUTH.currentUser;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {

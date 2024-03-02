@@ -5,8 +5,10 @@ import { RefObject } from "react";
 import { Image, View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
+import { MOCK_AVATAR } from "@/shared/const";
 
 import { Button } from "../Button/Button";
+import { ProgressBar } from "../ProgressBar/ProgressBar";
 import { Text } from "../Text/Text";
 import { CameraButtons } from "./CameraButtons";
 import { usePhotoLoader } from "./model/usePhotoLoader";
@@ -15,6 +17,7 @@ import { styles } from "./styles";
 type loaderVariants = "small" | "big";
 
 type Props = {
+  progress?: number;
   photo?: string | undefined;
   addStyles?: object;
   variant?: loaderVariants;
@@ -23,6 +26,7 @@ type Props = {
 
 export const PhotoLoader = (props: Props) => {
   const {
+    progress,
     photo: photoProps,
     addStyles,
     variant = "big",
@@ -62,30 +66,36 @@ export const PhotoLoader = (props: Props) => {
             takePic={takePic}
             sharePic={sharePic}
           />
-          {photo && (
-            <Image
-              style={styles.preview}
-              source={{
-                uri: photo ? photo : undefined,
-              }}
-            />
-          )}
+          <Image
+            style={styles.preview}
+            source={{
+              uri: photo ? photo : MOCK_AVATAR,
+            }}
+          />
         </View>
       </Camera>
     );
   }
 
+  const updatedProgress = progress ? progress / 100 : null;
+
   if (variant === "small") {
     return (
       <View style={[styles.box, addStyles && addStyles]}>
-        {photo && (
-          <Image
-            style={styles.preview}
-            source={{
-              uri: photo ? photo : undefined,
-            }}
+        <Image
+          style={styles.preview}
+          source={{
+            uri: photo ? photo : MOCK_AVATAR,
+          }}
+        />
+        {progress ? (
+          <ProgressBar
+            addStyles={styles.progressBar}
+            progress={updatedProgress!}
+            width={null}
+            color={variables.accentColor}
           />
-        )}
+        ) : null}
         <Button
           style={styles.icon}
           onPress={photo ? deletePhoto : pickImage}

@@ -1,11 +1,12 @@
 import { Image, StyleSheet, View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
+import { MOCK_AVATAR } from "@/shared/const";
 
 import { Text } from "../Text/Text";
 
 type Props = {
-  photoUrl: string;
+  photoUrl?: string | null;
   author: string;
 };
 export const ProfileCard = (props: Props) => {
@@ -14,7 +15,7 @@ export const ProfileCard = (props: Props) => {
     <View style={styles.container}>
       <Image
         source={{
-          uri: photoUrl,
+          uri: photoUrl ? photoUrl : MOCK_AVATAR,
         }}
         style={styles.img}
         resizeMode="cover"

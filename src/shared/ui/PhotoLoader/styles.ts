@@ -25,6 +25,13 @@ export const styles = StyleSheet.create({
     right: -15,
     bottom: 14,
   },
+  progressBar: {
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    width: "80%",
+    transform: [{ translateX: -50 }],
+  },
 });
 
 export const cameraButtonsStyles = StyleSheet.create({
