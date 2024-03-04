@@ -1,7 +1,8 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Image } from "expo-image";
+import { StyleSheet, View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
-import { MOCK_AVATAR } from "@/shared/const";
+import { BLUR_HASH, IMAGE_TRANSITION, MOCK_AVATAR } from "@/shared/const";
 
 import { Text } from "../Text/Text";
 
@@ -17,8 +18,10 @@ export const ProfileCard = (props: Props) => {
         source={{
           uri: photoUrl ? photoUrl : MOCK_AVATAR,
         }}
+        placeholder={BLUR_HASH}
         style={styles.img}
-        resizeMode="cover"
+        contentFit="cover"
+        transition={IMAGE_TRANSITION}
       />
       <Text
         text={author}

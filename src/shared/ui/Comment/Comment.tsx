@@ -1,5 +1,7 @@
-import { Image, View } from "react-native";
+import { Image } from "expo-image";
+import { View } from "react-native";
 
+import { BLUR_HASH, IMAGE_TRANSITION } from "@/shared/const";
 import { formatDate } from "@/shared/lib/helpers";
 
 import { Text } from "../Text/Text";
@@ -20,8 +22,10 @@ export const Comment = (props: Props) => {
           source={{
             uri: authorPhotoUrl,
           }}
+          placeholder={BLUR_HASH}
           style={styles.img}
-          resizeMode="cover"
+          contentFit="cover"
+          transition={IMAGE_TRANSITION}
         />
       )}
       <View style={styles.box}>

@@ -5,18 +5,11 @@ import {
   type UnknownAction,
 } from "@reduxjs/toolkit";
 
+import { type reducer as uiReducer } from "@/redux/ui/slice";
 import { rtkApi } from "@/shared/api/rtkApi";
 
-// import { type notificationApi } from "~/libs/packages/notification/notification.js";
-// import { type authApi } from "~/packages/auth/auth.js";
-// import { type commentApi } from "~/packages/comment/comment.js";
-// import { type imageApi } from "~/packages/image/image.js";
-// import { type postApi } from "~/packages/post/post.js";
-// import { type storageApi } from "~/packages/storage/storage.js";
-// import { type reducer as profileReducer } from "~/slices/profile/profile.js";
-// import { type reducer as threadReducer } from "~/slices/thread/thread.js";
-
 type RootReducer = {
+  ui: ReturnType<typeof uiReducer>;
   [rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 
   //   posts: ReturnType<typeof threadReducer>;

@@ -23,6 +23,7 @@ export const CreatePost = () => {
     },
     [dispatch],
   );
+
   return (
     <KeyboardAvoidingView>
       <View style={styles.container}>

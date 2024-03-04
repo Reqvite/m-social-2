@@ -7,7 +7,9 @@ import { useReducer, useState } from "react";
 import { Alert } from "react-native";
 
 import { FIREBASE_AUTH } from "@/app/configs/firebaseConfig";
+import { actions as uiActions } from "@/redux/ui/slice";
 import { deletePhoto, savePhoto } from "@/shared/lib/firebase/photos";
+import { useAppDispatch } from "@/shared/lib/hooks";
 import { validateUserAuthForm } from "@/shared/lib/validations";
 
 type FormState = {
@@ -52,6 +54,7 @@ export const useAuthForm = () => {
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [state, dispatch] = useReducer(formReducer, initialState);
+  const appDispatch = useAppDispatch();
 
   const onSignIn = async () => {
     try {
@@ -69,7 +72,6 @@ export const useAuthForm = () => {
       Alert.alert(e.message);
     } finally {
       setIsLoading(false);
-      setProgress(0);
     }
   };
 
@@ -98,6 +100,7 @@ export const useAuthForm = () => {
         photoURL: photo?.downloadUrl,
       });
       dispatch({ type: "RESET_STATE" });
+      appDispatch(uiActions.setIsRegisterCompleted());
     } catch (e) {
       if (photo) {
         await deletePhoto(photo?.downloadUrl);

@@ -1,6 +1,8 @@
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
+import { selectIsRegisteredCompleted } from "@/redux/ui/selector";
+import { useAppSelector } from "@/shared/lib/hooks";
 import { Container, Loader } from "@/shared/ui";
 
 import { FIREBASE_AUTH } from "../configs/firebaseConfig";
@@ -10,7 +12,7 @@ import { Tabs } from "./Tabs";
 export const useRoute = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  // const auth = FIREBASE_AUTH.currentUser;
+  const isRegisterCompleted = useAppSelector(selectIsRegisteredCompleted);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
@@ -19,7 +21,7 @@ export const useRoute = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [isRegisterCompleted]);
 
   if (isLoading) {
     return (
@@ -36,7 +38,7 @@ export const useRoute = () => {
     );
   }
 
-  if (!user) {
+  if (!user || !user.displayName) {
     return <AuthScreens />;
   }
 

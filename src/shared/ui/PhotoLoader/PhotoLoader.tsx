@@ -1,15 +1,15 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
+import { Image } from "expo-image";
 import { RefObject } from "react";
-import { Image, View } from "react-native";
+import { View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
 import { MOCK_AVATAR } from "@/shared/const";
 
 import { Button } from "../Button/Button";
 import { ProgressBar } from "../ProgressBar/ProgressBar";
-import { Text } from "../Text/Text";
 import { CameraButtons } from "./CameraButtons";
 import { usePhotoLoader } from "./model/usePhotoLoader";
 import { styles } from "./styles";
@@ -45,10 +45,6 @@ export const PhotoLoader = (props: Props) => {
     sharePic,
   } = usePhotoLoader(onChangePhoto, photoProps);
 
-  if (!hasCameraPermission) {
-    return <Text text="Requesting permissions..." />;
-  }
-
   if (variant === "big") {
     return (
       <Camera
@@ -59,19 +55,30 @@ export const PhotoLoader = (props: Props) => {
         <View style={[styles.camera, addStyles && addStyles]}>
           <CameraButtons
             isPhoto={photo}
-            permissionGranted={hasCameraPermission.granted}
+            permissionGranted={hasCameraPermission?.granted}
             toggleCameraType={toggleCameraType}
             deletePhoto={deletePhoto}
             pickImage={pickImage}
             takePic={takePic}
             sharePic={sharePic}
           />
-          <Image
-            style={styles.preview}
-            source={{
-              uri: photo ? photo : MOCK_AVATAR,
-            }}
-          />
+          {hasCameraPermission?.granted ? (
+            photo ? (
+              <Image
+                style={styles.preview}
+                source={{
+                  uri: photo,
+                }}
+              />
+            ) : null
+          ) : (
+            <Image
+              style={styles.preview}
+              source={{
+                uri: photo ? photo : MOCK_AVATAR,
+              }}
+            />
+          )}
         </View>
       </Camera>
     );

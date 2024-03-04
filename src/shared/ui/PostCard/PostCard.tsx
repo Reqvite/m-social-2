@@ -1,9 +1,10 @@
 import { AntDesign, EvilIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Image, TouchableOpacity, View } from "react-native";
+import { Image } from "expo-image";
+import { TouchableOpacity, View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
-import { ACTIVE_OPACITY } from "@/shared/const";
+import { ACTIVE_OPACITY, BLUR_HASH, IMAGE_TRANSITION } from "@/shared/const";
 import { PostCardI } from "@/shared/types";
 
 import { ProfileCard } from "../ProfileCard/ProfileCard";
@@ -41,8 +42,10 @@ export const PostCard = (props: Props) => {
           source={{
             uri: photoUrl,
           }}
+          placeholder={BLUR_HASH}
           style={styles.img}
-          resizeMode="cover"
+          contentFit="cover"
+          transition={IMAGE_TRANSITION}
         />
         <Text
           text={title}

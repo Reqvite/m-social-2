@@ -9,6 +9,7 @@ import {
   REHYDRATE,
 } from "redux-persist";
 
+import { reducer as uiReducer } from "@/redux/ui/slice";
 import { rtkApi } from "@/shared/api/rtkApi";
 
 import {
@@ -36,6 +37,7 @@ class Store implements StorePackage {
   public constructor() {
     const rootReducer: ReducersMapObject<RootReducer> = {
       [rtkApi.reducerPath]: rtkApi.reducer,
+      ui: uiReducer,
     };
     // const persistedReducer = persistReducer(persistConfig, rootReducer);
     this.#instance = configureStore({

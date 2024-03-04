@@ -3,7 +3,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
 
@@ -17,7 +17,7 @@ type Props = {
   takePic: () => void;
   sharePic: () => void;
   isPhoto: string | undefined;
-  permissionGranted: boolean;
+  permissionGranted: boolean | undefined;
 };
 
 export const CameraButtons = (props: Props) => {
@@ -36,6 +36,7 @@ export const CameraButtons = (props: Props) => {
   const onPermissionDisabled = (callback: () => void) => {
     if (!permissionGranted) {
       requestPermission();
+      Alert.alert("Turn on your camera permission in phone settings.");
     } else {
       callback();
     }

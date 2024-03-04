@@ -1,12 +1,8 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { StatusBar } from "expo-status-bar";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { Providers } from "@/app";
-import { useRoute } from "@/app/Routes/AppRoute";
-import { Text } from "@/shared/ui";
+import { Main, Providers } from "@/app";
 
 SplashScreen.preventAutoHideAsync;
 export default function App() {
@@ -30,18 +26,13 @@ export default function App() {
     prepare();
   }, []);
 
-  const routing = useRoute();
-
   if (!appIsReady || !fontsLoaded) {
     return null;
   }
 
   return (
     <Providers>
-      <Suspense fallback={<Text text="LOADING" />}>
-        <StatusBar style="light" />
-        <NavigationContainer>{routing}</NavigationContainer>
-      </Suspense>
+      <Main />
     </Providers>
   );
 }
