@@ -4,4 +4,5 @@ export type AppRootParamList = {
   Registration: undefined;
   Comments: { photoUrl: string; id: string };
   Map: { location: string };
+  CreatePost: undefined;
 };

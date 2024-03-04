@@ -1,11 +1,12 @@
 import { PostList } from "@/components/PostsList";
+import { useGetPosts } from "@/redux/posts/posts";
 import { Container } from "@/shared/ui";
 
 const PostsScreen = () => {
-  // const { isLoading, data } = useGetPosts();
+  const { data } = useGetPosts();
   return (
     <Container>
-      <PostList />
+      <PostList list={data} />
     </Container>
   );
 };

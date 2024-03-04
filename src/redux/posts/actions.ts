@@ -1,6 +1,15 @@
-import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 
-import { FIREBASE_DB } from "@/app/configs/firebaseConfig";
+import { FIREBASE_AUTH, FIREBASE_DB } from "@/app/configs/firebaseConfig";
+import { savePhoto } from "@/shared/lib/firebase/photos";
 import { PostCreateRequest, PostI } from "@/shared/types/post";
 
 const fetchPosts = async () => {
@@ -9,13 +18,31 @@ const fetchPosts = async () => {
     const querySnapshot = await getDocs(postsRef);
     const posts: PostI[] = [];
     querySnapshot?.forEach((doc) => {
-      posts.push({ id: doc.id, ...doc.data() } as PostI);
+      posts.push({ ...doc.data() } as PostI);
     });
     return { data: posts };
   } catch (error) {
     return { error };
   }
 };
+
+async function fetchPostsByUserId() {
+  const user = FIREBASE_AUTH.currentUser;
+
+  try {
+    const postsRef = collection(FIREBASE_DB, "posts");
+    const querySnapshot = await getDocs(
+      query(postsRef, where("authorId", "==", user?.uid)),
+    );
+    const posts: PostI[] = [];
+    querySnapshot.forEach((doc) => {
+      posts.push({ ...doc.data() } as PostI);
+    });
+    return { data: posts };
+  } catch (error) {
+    return { error };
+  }
+}
 
 const fetchSinglePost = async (id: string) => {
   try {
@@ -29,11 +56,25 @@ const fetchSinglePost = async (id: string) => {
 
 const createPost = async (body: PostCreateRequest) => {
   try {
-    const docRef = await addDoc(collection(FIREBASE_DB, "posts"), body);
-    return { data: { id: docRef.id, ...body } };
+    const user = FIREBASE_AUTH.currentUser;
+    const photo = await savePhoto(body.photo!);
+    const newPostRef = doc(collection(FIREBASE_DB, "posts"));
+    const newPost = await setDoc(newPostRef, {
+      authorId: user?.uid,
+      author: user?.displayName,
+      authorPhotoUrl: user?.photoURL,
+      likes: [],
+      comments: [],
+      id: newPostRef.id,
+      photoUrl: photo?.downloadUrl,
+      title: body.title,
+      location: body.location,
+    });
+
+    return { data: { post: newPost } };
   } catch (error) {
     return { error };
   }
 };
 
-export { createPost, fetchPosts, fetchSinglePost };
+export { createPost, fetchPosts, fetchPostsByUserId, fetchSinglePost };

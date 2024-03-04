@@ -15,7 +15,7 @@ import { useCreatePost } from "../model/useCreatePost";
 import { styles } from "./styles";
 
 export const CreatePost = () => {
-  const { dispatch, state } = useCreatePost();
+  const { dispatch, state, onCreatePost, isLoading } = useCreatePost();
 
   const setLocation = useCallback(
     (location: string) => {
@@ -53,7 +53,13 @@ export const CreatePost = () => {
               setValue={setLocation}
             />
           </View>
-          <Button text="Publish" addStyles={styles.button} />
+          <Button
+            text="Publish"
+            addStyles={styles.button}
+            onPress={onCreatePost}
+            isLoading={isLoading}
+            disabled={isLoading}
+          />
         </View>
         <Button
           addStyles={styles.deleteButton}

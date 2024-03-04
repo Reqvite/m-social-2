@@ -43,7 +43,46 @@ export const PhotoLoader = (props: Props) => {
     pickImage,
     takePic,
     sharePic,
+    onPermissionDisabled,
   } = usePhotoLoader(onChangePhoto, photoProps);
+
+  const updatedProgress = progress ? progress / 100 : null;
+
+  const cameraView = (
+    <View style={[styles.camera, addStyles && addStyles]}>
+      <CameraButtons
+        isPhoto={photo}
+        permissionGranted={hasCameraPermission?.granted}
+        onPermissionDisabled={onPermissionDisabled}
+        toggleCameraType={toggleCameraType}
+        deletePhoto={deletePhoto}
+        pickImage={pickImage}
+        takePic={takePic}
+        sharePic={sharePic}
+      />
+      {hasCameraPermission?.granted ? (
+        photo ? (
+          <Image
+            style={styles.preview}
+            source={{
+              uri: photo,
+            }}
+          />
+        ) : null
+      ) : (
+        <Image
+          style={styles.preview}
+          source={{
+            uri: photo ? photo : MOCK_AVATAR,
+          }}
+        />
+      )}
+    </View>
+  );
+
+  if (!hasCameraPermission?.granted && variant !== "small") {
+    return <>{cameraView}</>;
+  }
 
   if (variant === "big") {
     return (
@@ -52,39 +91,10 @@ export const PhotoLoader = (props: Props) => {
         ref={cameraRef as RefObject<Camera>}
         style={styles.camera}
       >
-        <View style={[styles.camera, addStyles && addStyles]}>
-          <CameraButtons
-            isPhoto={photo}
-            permissionGranted={hasCameraPermission?.granted}
-            toggleCameraType={toggleCameraType}
-            deletePhoto={deletePhoto}
-            pickImage={pickImage}
-            takePic={takePic}
-            sharePic={sharePic}
-          />
-          {hasCameraPermission?.granted ? (
-            photo ? (
-              <Image
-                style={styles.preview}
-                source={{
-                  uri: photo,
-                }}
-              />
-            ) : null
-          ) : (
-            <Image
-              style={styles.preview}
-              source={{
-                uri: photo ? photo : MOCK_AVATAR,
-              }}
-            />
-          )}
-        </View>
+        {cameraView}
       </Camera>
     );
   }
-
-  const updatedProgress = progress ? progress / 100 : null;
 
   if (variant === "small") {
     return (

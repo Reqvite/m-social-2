@@ -22,10 +22,6 @@ export const Tabs = () => {
           backgroundColor: variables.bgPrimary,
         },
         headerTitleStyle: {
-          // color: variables.primaryColor,
-          // textAlign: "center",
-          // fontWeight: "bold",
-          // fontSize: 20,
           display: "none",
         },
         headerRight: () => (
@@ -61,6 +57,11 @@ export const Tabs = () => {
           ),
           headerShown: false,
         }}
+        listeners={({ navigation }) => ({
+          tabPress: () => {
+            navigation.navigate("CreatePost");
+          },
+        })}
       />
       <Screen
         name="Profile"

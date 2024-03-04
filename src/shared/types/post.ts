@@ -13,7 +13,7 @@ interface PostCardI {
 type PostI = PostCardI;
 
 type PostCreateRequest = {
-  photo: string;
+  photo: string | undefined;
   location: string;
   title: string;
 };

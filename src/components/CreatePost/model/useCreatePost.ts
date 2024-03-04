@@ -1,4 +1,8 @@
 import { useReducer } from "react";
+import { Alert } from "react-native";
+
+import { useCreatePostMutation } from "@/redux/posts/posts";
+import { validateCreatePost } from "@/shared/lib/validations";
 
 type FormState = {
   photo: string | undefined;
@@ -35,6 +39,18 @@ const formReducer = (state: FormState, action: Action): FormState => {
 
 export const useCreatePost = () => {
   const [state, dispatch] = useReducer(formReducer, initialState);
+  const [createPost, { isLoading }] = useCreatePostMutation();
 
-  return { dispatch, state };
+  const onCreatePost = () => {
+    try {
+      validateCreatePost({ body: state });
+      createPost({
+        body: state,
+      });
+    } catch (e) {
+      Alert.alert(e.message);
+    }
+  };
+
+  return { dispatch, state, onCreatePost, isLoading };
 };

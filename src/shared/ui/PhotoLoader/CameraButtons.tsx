@@ -2,8 +2,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Camera } from "expo-camera";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 
 import { variables } from "@/app/styles/variables";
 
@@ -16,6 +15,7 @@ type Props = {
   deletePhoto: () => void;
   takePic: () => void;
   sharePic: () => void;
+  onPermissionDisabled: () => void;
   isPhoto: string | undefined;
   permissionGranted: boolean | undefined;
 };
@@ -28,19 +28,9 @@ export const CameraButtons = (props: Props) => {
     deletePhoto,
     takePic,
     sharePic,
+    onPermissionDisabled,
     permissionGranted,
   } = props;
-
-  const [, requestPermission] = Camera.useCameraPermissions();
-
-  const onPermissionDisabled = (callback: () => void) => {
-    if (!permissionGranted) {
-      requestPermission();
-      Alert.alert("Turn on your camera permission in phone settings.");
-    } else {
-      callback();
-    }
-  };
 
   return (
     <View style={cameraButtonsStyles.uploadPhotoBox}>
@@ -84,7 +74,7 @@ export const CameraButtons = (props: Props) => {
               cameraButtonsStyles.cameraBtn,
               cameraButtonsStyles.cameraBtnBig,
             ]}
-            onPress={() => onPermissionDisabled(takePic)}
+            onPress={permissionGranted ? takePic : onPermissionDisabled}
             icon={
               <FontAwesome5
                 name="camera"
@@ -92,10 +82,13 @@ export const CameraButtons = (props: Props) => {
                 color={variables.colorBlack}
               />
             }
+            text="Ask again"
           />
           <Button
             addStyles={cameraButtonsStyles.cameraBtn}
-            onPress={() => onPermissionDisabled(toggleCameraType)}
+            onPress={
+              permissionGranted ? toggleCameraType : onPermissionDisabled
+            }
             icon={
               <MaterialIcons
                 name="flip-camera-ios"

@@ -1,19 +1,27 @@
+import { useNavigation } from "@react-navigation/native";
 import { Camera, CameraType } from "expo-camera";
 import { FlipType, manipulateAsync, SaveFormat } from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
 import { shareAsync } from "expo-sharing";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Alert } from "react-native";
 
 export const usePhotoLoader = (
   onChangePhoto: (photo: string | undefined) => void,
   photoProps: string | undefined,
 ) => {
   const cameraRef = useRef<Camera>();
-
+  const [isFirstRequest, setIsFirstRequest] = useState(true);
   const [type, setType] = useState(CameraType.back);
-  const [hasCameraPermission] = Camera.useCameraPermissions();
+  const [hasCameraPermission, requestPermission] =
+    Camera.useCameraPermissions();
   const [isPhotoDeleted, setIsPhotoDeleted] = useState(false);
   const [photo, setPhoto] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    requestPermission();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const setDownloadPhoto = useCallback(
     (photo: string | undefined) => {
@@ -83,6 +91,20 @@ export const usePhotoLoader = (
     }
   };
 
+  const onPermissionDisabled = async () => {
+    await requestPermission();
+    if (!hasCameraPermission?.granted && isFirstRequest) {
+      Alert.alert("Turn on your camera permission in phone settings.");
+      setIsFirstRequest(false);
+    }
+  };
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.navigate("CreatePost");
+  }, [hasCameraPermission, isFirstRequest, navigation]);
+
   return {
     photo,
     type,
@@ -93,5 +115,6 @@ export const usePhotoLoader = (
     pickImage,
     takePic,
     sharePic,
+    onPermissionDisabled,
   };
 };
