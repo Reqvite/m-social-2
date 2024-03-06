@@ -3,6 +3,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  orderBy,
   query,
   setDoc,
   where,
@@ -10,15 +11,20 @@ import {
 
 import { FIREBASE_AUTH, FIREBASE_DB } from "@/app/configs/firebaseConfig";
 import { savePhoto } from "@/shared/lib/firebase/photos";
+import { geoCodeAsync } from "@/shared/lib/helpers";
 import { PostCreateRequest, PostI } from "@/shared/types/post";
 
 const fetchPosts = async () => {
   try {
     const postsRef = collection(FIREBASE_DB, "posts");
-    const querySnapshot = await getDocs(postsRef);
+    const querySnapshot = await getDocs(
+      query(postsRef, orderBy("createdAt", "desc")),
+    );
     const posts: PostI[] = [];
     querySnapshot?.forEach((doc) => {
-      posts.push({ ...doc.data() } as PostI);
+      const postData = doc.data();
+      const createdAt = postData.createdAt.nanoseconds;
+      posts.push({ ...postData, createdAt } as PostI);
     });
     return { data: posts };
   } catch (error) {
@@ -59,6 +65,7 @@ const createPost = async (body: PostCreateRequest) => {
     const user = FIREBASE_AUTH.currentUser;
     const photo = await savePhoto(body.photo!);
     const newPostRef = doc(collection(FIREBASE_DB, "posts"));
+    const geoCode = await geoCodeAsync(body.location);
     const newPost = await setDoc(newPostRef, {
       authorId: user?.uid,
       author: user?.displayName,
@@ -69,6 +76,8 @@ const createPost = async (body: PostCreateRequest) => {
       photoUrl: photo?.downloadUrl,
       title: body.title,
       location: body.location,
+      geoCode,
+      createdAt: JSON.stringify(new Date()),
     });
 
     return { data: { post: newPost } };

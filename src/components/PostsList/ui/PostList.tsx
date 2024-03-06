@@ -1,15 +1,21 @@
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 
 import { PostCardI } from "@/shared/types";
-import { PostCard } from "@/shared/ui";
+import { Loader, PostCard } from "@/shared/ui";
 
 type Props = {
   withProfile?: boolean;
   list?: PostCardI[];
+  isLoading?: boolean;
 };
 
 export const PostList = (props: Props) => {
-  const { withProfile = true, list = [] } = props;
+  const { withProfile = true, list = [], isLoading } = props;
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <SafeAreaView>
       <FlatList

@@ -27,12 +27,12 @@ export const PostCard = (props: Props) => {
     authorPhotoUrl,
     // authorUrl,
     withProfile,
+    geoCode,
   } = props;
 
-  const navigation = useNavigation();
-  const navigateComments = () =>
-    navigation.navigate("Comments", { photoUrl, id });
-  const navigateMap = () => navigation.navigate("Map", { location });
+  const { navigate } = useNavigation();
+  const navigateComments = () => navigate("Comments", { photoUrl, id });
+  const navigateMap = () => navigate("Map", { location: geoCode });
 
   return (
     <>

@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { useReducer } from "react";
 import { Alert } from "react-native";
 
@@ -39,14 +40,17 @@ const formReducer = (state: FormState, action: Action): FormState => {
 
 export const useCreatePost = () => {
   const [state, dispatch] = useReducer(formReducer, initialState);
+  const { navigate } = useNavigation();
   const [createPost, { isLoading }] = useCreatePostMutation();
 
-  const onCreatePost = () => {
+  const onCreatePost = async () => {
     try {
       validateCreatePost({ body: state });
-      createPost({
+      await createPost({
         body: state,
       });
+      dispatch({ type: "RESET_STATE" });
+      navigate("Posts");
     } catch (e) {
       Alert.alert(e.message);
     }

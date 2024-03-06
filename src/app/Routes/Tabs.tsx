@@ -1,5 +1,6 @@
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 
 import { CreatePostsScreen, HomeScreen, ProfileScreen } from "@/screens";
@@ -42,7 +43,14 @@ export const Tabs = () => {
       <Screen
         name="Post"
         component={HomeScreen}
-        options={() => ({
+        options={({ route }) => ({
+          headerShown: ((route) => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? "";
+            if (routeName === "Comments" || routeName === "Map") {
+              return false;
+            }
+            return true;
+          })(route),
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="dynamic-feed" size={size} color={color} />
           ),

@@ -1,4 +1,5 @@
 import { rtkApi } from "@/shared/api/rtkApi";
+import { RtkApiTags } from "@/shared/const";
 import { PostI } from "@/shared/types/post";
 
 import {
@@ -19,6 +20,7 @@ export const postsApi = rtkApi.injectEndpoints({
       async queryFn() {
         return await fetchPosts();
       },
+      providesTags: [RtkApiTags.HomePosts],
     }),
     fetchSinglePost: builder.query({
       async queryFn(id) {
@@ -29,6 +31,7 @@ export const postsApi = rtkApi.injectEndpoints({
       async queryFn({ body }) {
         return createPost(body);
       },
+      invalidatesTags: [RtkApiTags.HomePosts],
     }),
   }),
 });

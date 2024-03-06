@@ -1,12 +1,20 @@
+import { RouteProp } from "@react-navigation/native";
+
+import { AppRootParamList } from "@/app/Routes/types";
 import { Container, Map, Text } from "@/shared/ui";
 
 type Props = {
-  location?: string;
+  route: RouteProp<AppRootParamList, "Map">;
 };
-const MapScreen = ({ location }: Props) => {
+const MapScreen = ({ route }: Props) => {
+  const { location } = route.params;
   return (
     <Container>
-      {location ? <Map location={location} /> : <Text text="Error" />}
+      {location ? (
+        <Map location={location} />
+      ) : (
+        <Text text="Sorry, but the location is not found." />
+      )}
     </Container>
   );
 };

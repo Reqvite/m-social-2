@@ -4,9 +4,11 @@ import MapView, { Marker } from "react-native-maps";
 import { styles } from "./styles";
 
 type Props = {
-  location: string;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
 };
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Map = ({ location }: Props) => {
   return (
     <View style={styles.container}>
@@ -14,8 +16,8 @@ export const Map = ({ location }: Props) => {
       <MapView
         style={styles.mapStyle}
         region={{
-          latitude: 47.751076,
-          longitude: -120.740135,
+          latitude: location.latitude,
+          longitude: location.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
@@ -27,8 +29,8 @@ export const Map = ({ location }: Props) => {
         <Marker
           title="I am here"
           coordinate={{
-            latitude: 47.751076,
-            longitude: -120.740135,
+            latitude: location.latitude,
+            longitude: location.longitude,
           }}
           description="Hello"
         />

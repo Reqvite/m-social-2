@@ -8,6 +8,11 @@ interface PostCardI {
   author: string;
   authorPhotoUrl: string;
   authorUrl?: string;
+  geoCode: {
+    latitude: number;
+    longitude: number;
+  };
+  createdAt?: Date;
 }
 
 type PostI = PostCardI;

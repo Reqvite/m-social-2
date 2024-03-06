@@ -4,3 +4,4 @@ export {
   IMAGE_TRANSITION,
   MOCK_AVATAR,
 } from "./const";
+export { RtkApiTags } from "./rtkApiTags";

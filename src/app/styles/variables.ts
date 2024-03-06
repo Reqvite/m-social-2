@@ -5,6 +5,7 @@ export const variables = {
   accentColorLightTransparent: "rgba(247, 156, 64, 0.5)",
   linkColor: "rgb(27, 67, 113)",
   primaryColor: "rgb(255, 255, 255)",
+  secondaryColor: "rgb(235, 235, 235)",
 
   bgPrimary: "rgb(32, 32, 35)",
   bgSecondary: "rgb(34, 34, 34)",
