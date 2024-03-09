@@ -15,8 +15,10 @@ export const postsApi = rtkApi.injectEndpoints({
       async queryFn() {
         return await fetchPostsByUserId();
       },
+      keepUnusedDataFor: 0,
+      providesTags: [RtkApiTags.ProfilePosts],
     }),
-    fetchPosts: builder.query<PostI[], string>({
+    fetchPosts: builder.query<PostI[], void>({
       async queryFn() {
         return await fetchPosts();
       },
@@ -31,11 +33,12 @@ export const postsApi = rtkApi.injectEndpoints({
       async queryFn({ body }) {
         return createPost(body);
       },
-      invalidatesTags: [RtkApiTags.HomePosts],
+      invalidatesTags: [RtkApiTags.HomePosts, RtkApiTags.ProfilePosts],
     }),
   }),
 });
 
+export const useGetUserPosts = postsApi.useFetchPostsByUserIdQuery;
 export const useGetPosts = postsApi.useFetchPostsQuery;
 export const useGetPost = postsApi.useFetchSinglePostQuery;
 export const useCreatePostMutation = postsApi.useCreatePostMutation;

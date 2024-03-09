@@ -9,6 +9,7 @@ type Props = ViewProps & {
 
 export const Container = (props: Props) => {
   const { children, addStyles, withoutPadding = false, ...otherProps } = props;
+
   return (
     <View
       style={[

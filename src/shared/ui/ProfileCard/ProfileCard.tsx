@@ -9,9 +9,10 @@ import { Text } from "../Text/Text";
 type Props = {
   photoUrl?: string | null;
   author: string;
+  isBig?: boolean;
 };
 export const ProfileCard = (props: Props) => {
-  const { photoUrl, author } = props;
+  const { photoUrl, author, isBig } = props;
   return (
     <View style={styles.container}>
       <Image
@@ -19,7 +20,7 @@ export const ProfileCard = (props: Props) => {
           uri: photoUrl ? photoUrl : MOCK_AVATAR,
         }}
         placeholder={BLUR_HASH}
-        style={styles.img}
+        style={[styles.img, isBig && styles.isBig]}
         contentFit="cover"
         transition={IMAGE_TRANSITION}
       />
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    gap: 15,
   },
   img: {
     alignSelf: "center",
@@ -48,5 +49,9 @@ const styles = StyleSheet.create({
   },
   authorText: {
     color: variables.colorWhite,
+  },
+  isBig: {
+    width: 60,
+    height: 60,
   },
 });

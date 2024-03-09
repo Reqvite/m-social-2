@@ -26,6 +26,7 @@ export const FlatListWithRefresh = <T extends { id: string }>(
     Component,
     refetch,
     withRefresh = true,
+    newProps,
   } = props;
 
   const onRefresh = useCallback(() => {
@@ -45,7 +46,7 @@ export const FlatListWithRefresh = <T extends { id: string }>(
         contentContainerStyle={styles.list}
         data={list}
         showsVerticalScrollIndicator={false}
-        renderItem={(item) => <Component {...item.item} />}
+        renderItem={(item) => <Component {...item.item} {...newProps} />}
         keyExtractor={(item) => item.id}
         refreshControl={
           withRefresh ? (
