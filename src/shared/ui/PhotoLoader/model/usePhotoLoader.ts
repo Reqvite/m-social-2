@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import { Camera, CameraType } from "expo-camera";
 import { FlipType, manipulateAsync, SaveFormat } from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
@@ -98,12 +97,6 @@ export const usePhotoLoader = (
       setIsFirstRequest(false);
     }
   };
-
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    navigation.navigate("CreatePost");
-  }, [hasCameraPermission, isFirstRequest, navigation]);
 
   return {
     photo,

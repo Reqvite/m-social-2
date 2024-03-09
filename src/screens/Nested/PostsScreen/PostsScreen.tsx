@@ -3,11 +3,16 @@ import { useGetPosts } from "@/redux/posts/posts";
 import { Container } from "@/shared/ui";
 
 const PostsScreen = () => {
-  const { data, isLoading } = useGetPosts();
+  const { data, isLoading, isFetching, refetch } = useGetPosts("");
 
   return (
     <Container>
-      <PostList list={data} isLoading={isLoading} />
+      <PostList
+        list={data}
+        isLoading={isLoading}
+        isFetching={isFetching}
+        refetch={refetch}
+      />
     </Container>
   );
 };

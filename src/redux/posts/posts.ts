@@ -16,7 +16,7 @@ export const postsApi = rtkApi.injectEndpoints({
         return await fetchPostsByUserId();
       },
     }),
-    fetchPosts: builder.query<PostI[], void>({
+    fetchPosts: builder.query<PostI[], string>({
       async queryFn() {
         return await fetchPosts();
       },

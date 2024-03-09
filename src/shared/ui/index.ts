@@ -1,6 +1,7 @@
 export { Button } from "./Button/Button";
 export { Comment } from "./Comment/Comment";
 export { Container } from "./Container/Container";
+export { FlatListWithRefresh } from "./FlatListWithRefresh/FlatListWithRefresh";
 export { Input } from "./Input/Input";
 export { LocationInput } from "./Input/LocationInput";
 export { KeyboardAvoidingView } from "./KeyboardAvoidingView/KeyboardAvoidingView";

@@ -62,10 +62,13 @@ const fetchSinglePost = async (id: string) => {
 
 const createPost = async (body: PostCreateRequest) => {
   try {
+    let geoCode = {};
     const user = FIREBASE_AUTH.currentUser;
     const photo = await savePhoto(body.photo!);
     const newPostRef = doc(collection(FIREBASE_DB, "posts"));
-    const geoCode = await geoCodeAsync(body.location);
+    if (body.location) {
+      geoCode = await geoCodeAsync(body.location);
+    }
     const newPost = await setDoc(newPostRef, {
       authorId: user?.uid,
       author: user?.displayName,
@@ -75,7 +78,7 @@ const createPost = async (body: PostCreateRequest) => {
       id: newPostRef.id,
       photoUrl: photo?.downloadUrl,
       title: body.title,
-      location: body.location,
+      location: body.location || "",
       geoCode,
       createdAt: JSON.stringify(new Date()),
     });

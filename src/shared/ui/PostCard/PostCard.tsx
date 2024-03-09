@@ -85,23 +85,25 @@ export const PostCard = (props: Props) => {
               addStyles={styles.boxItemText}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={ACTIVE_OPACITY}
-            onPress={navigateMap}
-            style={[styles.boxItem, styles.boxItemRight]}
-          >
-            <EvilIcons
-              name="location"
-              size={24}
-              color={variables.primaryColor}
-            />
-            <Text
-              text={location}
-              align="left"
-              size="xs"
-              addStyles={styles.locationText}
-            />
-          </TouchableOpacity>
+          {location && (
+            <TouchableOpacity
+              activeOpacity={ACTIVE_OPACITY}
+              onPress={navigateMap}
+              style={[styles.boxItem, styles.boxItemRight]}
+            >
+              <EvilIcons
+                name="location"
+                size={24}
+                color={variables.primaryColor}
+              />
+              <Text
+                text={location}
+                align="left"
+                size="xs"
+                addStyles={styles.locationText}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </>
