@@ -1,4 +1,4 @@
-import { ComponentType, useCallback } from "react";
+import { ComponentType, useCallback, useRef, useState } from "react";
 import { FlatList, RefreshControl, SafeAreaView } from "react-native";
 import { StyleSheet } from "react-native";
 
@@ -7,6 +7,7 @@ import { variables } from "@/app/styles/variables";
 import { Loader } from "../Loader/Loader";
 
 type Props<T> = {
+  addStyles?: object;
   list?: T[];
   isLoading?: boolean;
   isFetching?: boolean;
@@ -20,18 +21,32 @@ export const FlatListWithRefresh = <T extends { id: string }>(
   props: Props<T>,
 ) => {
   const {
+    addStyles,
     list = [],
     isLoading,
-    isFetching,
     Component,
     refetch,
     withRefresh = true,
     newProps,
   } = props;
+  const [isRefreshLoading, setIsRefreshLoading] = useState(false);
 
-  const onRefresh = useCallback(() => {
+  const flatListRef = useRef<FlatList<T> | null>(null);
+
+  // useEffect(() => {
+  //   if (flatListRef.current) {
+  //     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+  //   }
+  // }, [list]);
+
+  const onRefresh = useCallback(async () => {
     if (refetch) {
-      refetch();
+      try {
+        setIsRefreshLoading(true);
+        await refetch();
+      } finally {
+        setIsRefreshLoading(false);
+      }
     }
   }, [refetch]);
 
@@ -39,11 +54,11 @@ export const FlatListWithRefresh = <T extends { id: string }>(
     return <Loader />;
   }
 
-  const isRefresh = !!(!isLoading && isFetching);
   return (
     <SafeAreaView>
       <FlatList
-        contentContainerStyle={styles.list}
+        ref={flatListRef}
+        contentContainerStyle={[styles.list, addStyles && addStyles]}
         data={list}
         showsVerticalScrollIndicator={false}
         renderItem={(item) => <Component {...item.item} {...newProps} />}
@@ -51,7 +66,7 @@ export const FlatListWithRefresh = <T extends { id: string }>(
         refreshControl={
           withRefresh ? (
             <RefreshControl
-              refreshing={isRefresh}
+              refreshing={isRefreshLoading}
               onRefresh={onRefresh}
               colors={[variables.accentColor]}
             />

@@ -5,6 +5,12 @@ type User = {
   createdAt: string;
 };
 
+type UserData = {
+  likes: string[];
+  id: string;
+  comments: [];
+};
+
 type UserAuthRequest = {
   photo?: string;
   login?: string;
@@ -12,4 +18,4 @@ type UserAuthRequest = {
   password: string;
 };
 
-export { User, UserAuthRequest };
+export { User, UserAuthRequest, UserData };

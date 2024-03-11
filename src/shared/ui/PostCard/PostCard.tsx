@@ -3,7 +3,9 @@ import { useNavigation } from "@react-navigation/native";
 import { Image } from "expo-image";
 import { TouchableOpacity, View } from "react-native";
 
+import { FIREBASE_AUTH } from "@/app/configs/firebaseConfig";
 import { variables } from "@/app/styles/variables";
+import { useLikePostMutation } from "@/redux/posts/posts";
 import { ACTIVE_OPACITY, BLUR_HASH, IMAGE_TRANSITION } from "@/shared/const";
 import { PostCardI } from "@/shared/types";
 
@@ -20,8 +22,8 @@ export const PostCard = (props: Props) => {
     title = "Preview title",
     photoUrl,
     id,
-    comments = "10",
-    likes = "10",
+    comments = [],
+    likes = [],
     location = "Washington",
     author = "Leonard",
     authorPhotoUrl,
@@ -30,10 +32,14 @@ export const PostCard = (props: Props) => {
     geoCode,
   } = props;
 
+  const user = FIREBASE_AUTH.currentUser!;
+
+  const isLikedByUser = likes.includes(user.uid);
+
   const { navigate } = useNavigation();
   const navigateComments = () => navigate("Comments", { photoUrl, id });
   const navigateMap = () => navigate("Map", { location: geoCode });
-
+  const [likePost, { isLoading }] = useLikePostMutation();
   return (
     <>
       {withProfile && <ProfileCard author={author} photoUrl={authorPhotoUrl} />}
@@ -60,26 +66,37 @@ export const PostCard = (props: Props) => {
             activeOpacity={ACTIVE_OPACITY}
             onPress={navigateComments}
           >
-            <EvilIcons name="comment" size={30} color={variables.colorWhite} />
+            <EvilIcons name="comment" size={35} color={variables.colorWhite} />
             <Text
-              text={comments}
+              text={comments.length}
               align="left"
               size="xs"
               addStyles={styles.boxItemText}
             />
           </TouchableOpacity>
           <TouchableOpacity
+            disabled={isLoading}
             style={styles.boxItem}
             activeOpacity={ACTIVE_OPACITY}
           >
-            <AntDesign
-              name="like2"
-              size={20}
-              color={variables.colorWhite}
-              onPress={() => console.log(1)}
-            />
+            {isLikedByUser ? (
+              <AntDesign
+                name="like1"
+                size={25}
+                color={variables.redColor}
+                onPress={() => likePost(id)}
+              />
+            ) : (
+              <AntDesign
+                name="like2"
+                size={25}
+                color={variables.colorWhite}
+                onPress={() => likePost(id)}
+              />
+            )}
+
             <Text
-              text={likes}
+              text={likes.length}
               align="left"
               size="xs"
               addStyles={styles.boxItemText}
@@ -93,7 +110,7 @@ export const PostCard = (props: Props) => {
             >
               <EvilIcons
                 name="location"
-                size={24}
+                size={30}
                 color={variables.primaryColor}
               />
               <Text

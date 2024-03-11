@@ -25,14 +25,16 @@ export const PostList = (props: Props) => {
   }
 
   return (
-    <FlatListWithRefresh
-      withRefresh={withRefresh}
-      list={list}
-      isLoading={isLoading}
-      isFetching={isFetching}
-      refetch={refetch}
-      Component={PostCard}
-      newProps={{ withProfile }}
-    />
+    <>
+      <FlatListWithRefresh
+        withRefresh={withRefresh}
+        list={list}
+        isLoading={isLoading}
+        isFetching={isFetching}
+        refetch={refetch}
+        Component={PostCard}
+        newProps={{ withProfile }}
+      />
+    </>
   );
 };

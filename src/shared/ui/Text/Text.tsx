@@ -3,11 +3,11 @@ import { Text as ReactText, TextProps } from "react-native";
 
 import { styles } from "./styles";
 
-type sizes = "xs" | "l" | "xl";
+type sizes = "xss" | "xs" | "l" | "xl";
 type align = "center" | "left" | "right";
 type color = "primary" | "secondary" | "white";
 type Props = TextProps & {
-  text: string;
+  text: string | number;
   bold?: boolean;
   addStyles?: object;
   size?: sizes;

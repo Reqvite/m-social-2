@@ -5,6 +5,10 @@ import { RtkApiTags } from "../const";
 export const rtkApi = createApi({
   reducerPath: "api",
   baseQuery: fakeBaseQuery(),
-  tagTypes: [RtkApiTags.HomePosts, RtkApiTags.ProfilePosts],
+  tagTypes: [
+    RtkApiTags.HomePosts,
+    RtkApiTags.ProfilePosts,
+    RtkApiTags.PostComments,
+  ],
   endpoints: () => ({}),
 });

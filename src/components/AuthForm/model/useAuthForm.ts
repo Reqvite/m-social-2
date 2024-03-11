@@ -3,10 +3,11 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { useReducer, useState } from "react";
 import { Alert } from "react-native";
 
-import { FIREBASE_AUTH } from "@/app/configs/firebaseConfig";
+import { FIREBASE_AUTH, FIREBASE_DB } from "@/app/configs/firebaseConfig";
 import { actions as uiActions } from "@/redux/ui/slice";
 import { deletePhoto, savePhoto } from "@/shared/lib/firebase/photos";
 import { useAppDispatch } from "@/shared/lib/hooks";
@@ -99,6 +100,13 @@ export const useAuthForm = () => {
         displayName: state.login,
         photoURL: photo?.downloadUrl,
       });
+      const userDocRef = doc(FIREBASE_DB, "users", user.uid);
+      await setDoc(userDocRef, {
+        id: user.uid,
+        likes: [],
+        comments: [],
+      });
+
       dispatch({ type: "RESET_STATE" });
       appDispatch(uiActions.setIsRegisterCompleted());
     } catch (e) {

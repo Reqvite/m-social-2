@@ -6,6 +6,9 @@ export const styles = StyleSheet.create({
   text: {
     letterSpacing: 1,
   },
+  xss: {
+    fontSize: 12,
+  },
   xs: {
     fontSize: 16,
   },

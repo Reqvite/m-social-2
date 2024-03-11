@@ -23,8 +23,6 @@ export const Map = ({ location }: Props) => {
         }}
         mapType="standard"
         minZoomLevel={1}
-        // onMapReady={() => console.log("Map is ready")}
-        // onRegionChange={() => console.log("Region change")}
       >
         <Marker
           title="I am here"

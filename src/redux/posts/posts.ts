@@ -1,12 +1,15 @@
 import { rtkApi } from "@/shared/api/rtkApi";
 import { RtkApiTags } from "@/shared/const";
-import { PostI } from "@/shared/types/post";
+import { PostCommentI, PostI } from "@/shared/types/post";
 
 import {
+  createComment,
   createPost,
+  fetchCommentsByPostId,
   fetchPosts,
   fetchPostsByUserId,
   fetchSinglePost,
+  likePost,
 } from "./actions";
 
 export const postsApi = rtkApi.injectEndpoints({
@@ -35,10 +38,36 @@ export const postsApi = rtkApi.injectEndpoints({
       },
       invalidatesTags: [RtkApiTags.HomePosts, RtkApiTags.ProfilePosts],
     }),
+    likePost: builder.mutation({
+      async queryFn(id) {
+        return likePost(id);
+      },
+      invalidatesTags: [RtkApiTags.HomePosts, RtkApiTags.ProfilePosts],
+    }),
+    addPostComment: builder.mutation({
+      async queryFn({ body }) {
+        return createComment(body);
+      },
+      invalidatesTags: [RtkApiTags.PostComments],
+    }),
+    fetchCommentsByPostId: builder.query<PostCommentI[], string>({
+      //@ts-expect-error ///
+      async queryFn(id) {
+        return await fetchCommentsByPostId(id);
+      },
+      providesTags: [
+        RtkApiTags.HomePosts,
+        RtkApiTags.PostComments,
+        RtkApiTags.ProfilePosts,
+      ],
+    }),
   }),
 });
 
+export const useGetPostComments = postsApi.useFetchCommentsByPostIdQuery;
 export const useGetUserPosts = postsApi.useFetchPostsByUserIdQuery;
 export const useGetPosts = postsApi.useFetchPostsQuery;
 export const useGetPost = postsApi.useFetchSinglePostQuery;
 export const useCreatePostMutation = postsApi.useCreatePostMutation;
+export const useCreatePostCommentMutation = postsApi.useAddPostCommentMutation;
+export const useLikePostMutation = postsApi.useLikePostMutation;

@@ -6,11 +6,14 @@ import { TextInput, TextInputProps, View } from "react-native";
 import { variables } from "@/app/styles/variables";
 
 import { Button } from "../Button/Button";
+import { Loader } from "../Loader/Loader";
 import { styles } from "./styles";
 
 type InputVariant = "default" | "underline" | "withButton";
 
 export type InputBaseProps = TextInputProps & {
+  isLoading?: boolean;
+  addStyles?: object;
   variant?: InputVariant;
   leftAddon?: ReactNode;
   rightAddon?: ReactNode;
@@ -19,6 +22,8 @@ export type InputBaseProps = TextInputProps & {
 
 export const Input = (props: InputBaseProps) => {
   const {
+    isLoading,
+    addStyles,
     leftAddon,
     rightAddon,
     variant = "default",
@@ -41,7 +46,7 @@ export const Input = (props: InputBaseProps) => {
 
   if (leftAddon || withButton || rightAddon) {
     return (
-      <View style={styles.containerWithAddon}>
+      <View style={[styles.containerWithAddon, addStyles && addStyles]}>
         {leftAddon && <View style={styles.leftAddon}>{leftAddon}</View>}
         <TextInput
           style={[
@@ -58,14 +63,19 @@ export const Input = (props: InputBaseProps) => {
         {rightAddon && <View style={styles.rightAddon}>{rightAddon}</View>}
         {withButton && (
           <Button
+            disabled={isLoading}
             onPress={onPress}
             addStyles={styles.button}
             icon={
-              <FontAwesome
-                name="send"
-                size={13}
-                color={variables.primaryColor}
-              />
+              isLoading ? (
+                <Loader color={variables.colorWhite} />
+              ) : (
+                <FontAwesome
+                  name="send"
+                  size={13}
+                  color={variables.primaryColor}
+                />
+              )
             }
           />
         )}
@@ -74,7 +84,12 @@ export const Input = (props: InputBaseProps) => {
   }
   return (
     <TextInput
-      style={[styles.input, variantStyles, isFocused && styles.focusedInput]}
+      style={[
+        styles.input,
+        addStyles && addStyles,
+        variantStyles,
+        isFocused && styles.focusedInput,
+      ]}
       placeholderTextColor={variables.grayColor}
       onFocus={handleFocus}
       onBlur={handleBlur}

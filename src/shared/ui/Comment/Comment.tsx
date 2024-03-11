@@ -1,41 +1,39 @@
-import { Image } from "expo-image";
 import { View } from "react-native";
 
-import { BLUR_HASH, IMAGE_TRANSITION } from "@/shared/const";
+import { FIREBASE_AUTH } from "@/app/configs/firebaseConfig";
 import { formatDate } from "@/shared/lib/helpers";
 
+import { ProfileCard } from "../ProfileCard/ProfileCard";
 import { Text } from "../Text/Text";
 import { styles } from "./styles";
 
 type Props = {
+  id: string;
   text: string;
-  date: string;
+  author: string;
+  authorId: string;
   authorPhotoUrl?: string;
   authorUrl?: string;
+  createdAt: number;
 };
 export const Comment = (props: Props) => {
-  const { text, date, authorPhotoUrl } = props;
+  const user = FIREBASE_AUTH.currentUser;
+  const { authorId, author, text, authorPhotoUrl, createdAt } = props;
+
+  const isUserComment = authorId === user?.uid;
   return (
-    <View style={styles.container}>
-      {authorPhotoUrl && (
-        <Image
-          source={{
-            uri: authorPhotoUrl,
-          }}
-          placeholder={BLUR_HASH}
-          style={styles.img}
-          contentFit="cover"
-          transition={IMAGE_TRANSITION}
-        />
-      )}
-      <View style={styles.box}>
-        <Text text={text} size="xs" align="left" addStyles={styles.text} />
-        <Text
-          text={formatDate(date)}
-          size="xs"
-          align="right"
-          addStyles={styles.date}
-        />
+    <View style={[styles.commentsBox, isUserComment && styles.isUserComment]}>
+      <ProfileCard author={author} photoUrl={authorPhotoUrl} />
+      <View style={styles.container}>
+        <View style={styles.box}>
+          <Text text={text} size="xs" align="left" addStyles={styles.text} />
+          <Text
+            text={formatDate(createdAt)}
+            size="xss"
+            align="right"
+            addStyles={styles.date}
+          />
+        </View>
       </View>
     </View>
   );
