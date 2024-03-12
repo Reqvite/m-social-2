@@ -48,18 +48,18 @@ export const postsApi = rtkApi.injectEndpoints({
       async queryFn({ body }) {
         return createComment(body);
       },
-      invalidatesTags: [RtkApiTags.PostComments],
+      invalidatesTags: [
+        RtkApiTags.HomePosts,
+        RtkApiTags.PostComments,
+        RtkApiTags.ProfilePosts,
+      ],
     }),
     fetchCommentsByPostId: builder.query<PostCommentI[], string>({
       //@ts-expect-error ///
       async queryFn(id) {
         return await fetchCommentsByPostId(id);
       },
-      providesTags: [
-        RtkApiTags.HomePosts,
-        RtkApiTags.PostComments,
-        RtkApiTags.ProfilePosts,
-      ],
+      providesTags: [RtkApiTags.PostComments],
     }),
   }),
 });

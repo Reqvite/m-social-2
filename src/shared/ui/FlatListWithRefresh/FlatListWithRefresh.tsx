@@ -33,12 +33,6 @@ export const FlatListWithRefresh = <T extends { id: string }>(
 
   const flatListRef = useRef<FlatList<T> | null>(null);
 
-  // useEffect(() => {
-  //   if (flatListRef.current) {
-  //     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-  //   }
-  // }, [list]);
-
   const onRefresh = useCallback(async () => {
     if (refetch) {
       try {
@@ -55,25 +49,27 @@ export const FlatListWithRefresh = <T extends { id: string }>(
   }
 
   return (
-    <SafeAreaView>
-      <FlatList
-        ref={flatListRef}
-        contentContainerStyle={[styles.list, addStyles && addStyles]}
-        data={list}
-        showsVerticalScrollIndicator={false}
-        renderItem={(item) => <Component {...item.item} {...newProps} />}
-        keyExtractor={(item) => item.id}
-        refreshControl={
-          withRefresh ? (
-            <RefreshControl
-              refreshing={isRefreshLoading}
-              onRefresh={onRefresh}
-              colors={[variables.accentColor]}
-            />
-          ) : undefined
-        }
-      />
-    </SafeAreaView>
+    <>
+      <SafeAreaView>
+        <FlatList
+          ref={flatListRef}
+          contentContainerStyle={[styles.list, addStyles && addStyles]}
+          data={list}
+          showsVerticalScrollIndicator={false}
+          renderItem={(item) => <Component {...item.item} {...newProps} />}
+          keyExtractor={(item) => item.id}
+          refreshControl={
+            withRefresh ? (
+              <RefreshControl
+                refreshing={isRefreshLoading}
+                onRefresh={onRefresh}
+                colors={[variables.accentColor]}
+              />
+            ) : undefined
+          }
+        />
+      </SafeAreaView>
+    </>
   );
 };
 

@@ -3,9 +3,16 @@ import { StyleSheet } from "react-native";
 import { variables } from "@/app/styles/variables";
 
 export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  loaderBox: {
+    height: 25,
+  },
   commentsList: {
-    gap: 5,
-    paddingBottom: 30,
+    gap: 8,
+    paddingTop: 20,
+    paddingBottom: 300,
   },
   img: {
     marginBottom: 15,
@@ -18,8 +25,10 @@ export const styles = StyleSheet.create({
     borderRadius: 0,
     width: "100%",
     marginTop: 20,
+    marginBottom: 10,
   },
   box: {
+    backgroundColor: variables.bgSecondary,
     position: "absolute",
     left: 0,
     right: 0,

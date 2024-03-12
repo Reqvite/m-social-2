@@ -75,7 +75,6 @@ const createPost = async (body: PostCreateRequest) => {
       geoCode = await geoCodeAsync(body.location);
     }
 
-    console.log(geoCode);
     const newPost = await setDoc(newPostRef, {
       authorId: user?.uid,
       author: user?.displayName,
@@ -86,6 +85,7 @@ const createPost = async (body: PostCreateRequest) => {
       photoUrl: photo?.downloadUrl,
       title: body.title,
       location: body.location || "",
+      //@ts-expect-error ///
       geoCode: geoCode?.latitude
         ? geoCode
         : { latitude: 35.905, longitude: -41.256 },

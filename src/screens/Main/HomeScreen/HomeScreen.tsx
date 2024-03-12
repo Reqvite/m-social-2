@@ -28,7 +28,13 @@ const HomeScreen = () => {
           headerShown: false,
         }}
       />
-      <Screen name="Comments" component={CommentsScreenAsync} />
+      <Screen
+        name="Comments"
+        options={{
+          headerShown: false,
+        }}
+        component={CommentsScreenAsync}
+      />
       <Screen name="Map" component={MapScreenAsync} />
     </Navigator>
   );

@@ -1,9 +1,11 @@
+import { Image } from "expo-image";
 import { useState } from "react";
 import { View } from "react-native";
 
 import { useCreatePostCommentMutation } from "@/redux/posts/posts";
+import { BLUR_HASH, IMAGE_TRANSITION } from "@/shared/const";
 import { PostCommentI } from "@/shared/types/post";
-import { Input } from "@/shared/ui";
+import { Input, Loader } from "@/shared/ui";
 
 import { CommentsList } from "./CommentsList";
 import { styles } from "./styles";
@@ -18,12 +20,29 @@ type Props = {
 };
 
 export const Comments = (props: Props) => {
-  const { id, list, isFetching, refetch, isLoading: isLoadingList } = props;
+  const {
+    id,
+    list,
+    isFetching,
+    refetch,
+    isLoading: isLoadingList,
+    photoUrl,
+  } = props;
   const [text, setText] = useState("");
   const [createComment, { isLoading }] = useCreatePostCommentMutation();
 
   return (
     <>
+      <View style={styles.loaderBox}>{isFetching && <Loader />}</View>
+      <Image
+        source={{
+          uri: photoUrl,
+        }}
+        placeholder={BLUR_HASH}
+        style={styles.img}
+        contentFit="cover"
+        transition={IMAGE_TRANSITION}
+      />
       <CommentsList
         list={list}
         isFetching={isFetching}

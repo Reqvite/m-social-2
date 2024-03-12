@@ -1,4 +1,6 @@
+import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { Button, ProfileCard, Text } from "@/shared/ui";
 
@@ -32,9 +34,6 @@ export const ProfileHeader = (props: Props) => {
     </View>
   );
 };
-
-import { useNavigation } from "@react-navigation/native";
-import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   box: {
