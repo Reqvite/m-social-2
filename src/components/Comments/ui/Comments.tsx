@@ -5,7 +5,7 @@ import { View } from "react-native";
 import { useCreatePostCommentMutation } from "@/redux/posts/posts";
 import { BLUR_HASH, IMAGE_TRANSITION } from "@/shared/const";
 import { PostCommentI } from "@/shared/types/post";
-import { Input, Loader } from "@/shared/ui";
+import { Input } from "@/shared/ui";
 
 import { CommentsList } from "./CommentsList";
 import { styles } from "./styles";
@@ -33,7 +33,6 @@ export const Comments = (props: Props) => {
 
   return (
     <>
-      <View style={styles.loaderBox}>{isFetching && <Loader />}</View>
       <Image
         source={{
           uri: photoUrl,
@@ -49,6 +48,7 @@ export const Comments = (props: Props) => {
         refetch={refetch}
         isLoading={isLoadingList}
       />
+
       <View style={styles.box}>
         <Input
           addStyles={styles.input}

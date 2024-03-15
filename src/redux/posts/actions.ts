@@ -103,10 +103,14 @@ const likePost = async (postId: string) => {
     const currentUser = FIREBASE_AUTH.currentUser!;
     const userId = currentUser.uid;
     const postRef = doc(FIREBASE_DB, "posts", postId);
-    const postSnapshot = await getDoc(postRef);
-    const post = postSnapshot.data() as PostI;
     const userRef = doc(FIREBASE_DB, "users", userId);
-    const userSnapshot = await getDoc(userRef);
+
+    const [postSnapshot, userSnapshot] = await Promise.all([
+      getDoc(postRef),
+      getDoc(userRef),
+    ]);
+
+    const post = postSnapshot.data() as PostI;
     const user = userSnapshot.data() as UserData;
 
     if (postSnapshot.exists() && userSnapshot.exists()) {
@@ -118,9 +122,10 @@ const likePost = async (postId: string) => {
         post.likes.push(userId);
       }
 
-      await updateDoc(userRef, { likes: user.likes });
-
-      await updateDoc(postRef, { likes: post.likes });
+      await Promise.all([
+        updateDoc(userRef, { likes: user.likes }),
+        updateDoc(postRef, { likes: post.likes }),
+      ]);
     }
 
     return { data: { post: post.likes.length } };
@@ -133,23 +138,27 @@ const createComment = async (body: PostCommentCreateRequest) => {
   try {
     const user = FIREBASE_AUTH.currentUser;
     const newCommentRef = doc(collection(FIREBASE_DB, "comments"));
+    const postId = body.postId;
 
-    const newComment = await setDoc(newCommentRef, {
-      authorId: user?.uid,
-      author: user?.displayName,
-      authorPhotoUrl: user?.photoURL,
-      id: newCommentRef.id,
-      postId: body.postId,
-      text: body.text,
-      createdAt: new Date().getTime(),
-    });
+    const [newComment, postSnapshot] = await Promise.all([
+      setDoc(newCommentRef, {
+        authorId: user?.uid,
+        author: user?.displayName,
+        authorPhotoUrl: user?.photoURL,
+        id: newCommentRef.id,
+        postId: postId,
+        text: body.text,
+        createdAt: new Date().getTime(),
+      }),
+      getDoc(doc(FIREBASE_DB, "posts", postId)),
+    ]);
 
-    const postRef = doc(FIREBASE_DB, "posts", body.postId);
-    const postSnapshot = await getDoc(postRef);
     const post = postSnapshot.data() as PostI;
     post.comments.push(newCommentRef.id);
 
-    await updateDoc(postRef, { comments: post.comments });
+    await updateDoc(doc(FIREBASE_DB, "posts", postId), {
+      comments: post.comments,
+    });
 
     return { data: { post: newComment } };
   } catch (error) {

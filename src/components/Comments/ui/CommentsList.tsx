@@ -11,6 +11,7 @@ type Props = {
 };
 export const CommentsList = (props: Props) => {
   const { list, refetch, isLoading } = props;
+
   return (
     <FlatListWithRefresh
       addStyles={styles.commentsList}

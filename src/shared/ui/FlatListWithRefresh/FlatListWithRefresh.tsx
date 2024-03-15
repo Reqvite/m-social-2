@@ -5,6 +5,7 @@ import { StyleSheet } from "react-native";
 import { variables } from "@/app/styles/variables";
 
 import { Loader } from "../Loader/Loader";
+import { Text } from "../Text/Text";
 
 type Props<T> = {
   addStyles?: object;
@@ -46,6 +47,10 @@ export const FlatListWithRefresh = <T extends { id: string }>(
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (list.length === 0 && !isLoading) {
+    return <Text text="List is empty" />;
   }
 
   return (
